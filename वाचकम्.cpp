@@ -356,7 +356,7 @@ public:
 int main()
 {
 	std::string लेखः="";
-	while(true)
+	while(!std::cin.eof())
 	{
 		std::getline(std::cin,लेखः);
 		if(लेखः=="0")break;
