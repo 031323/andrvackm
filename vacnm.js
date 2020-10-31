@@ -190,11 +190,14 @@ function vacnm(text) {
 
   //var user_text = document.getElementById('texttospeak').value;
   var user_text=UTF8ToString(Module.ccall('anulekh','number',['string'],[text]));
+  //user_text='[[a]] [[q]] [[i]] <mark /> [[Ru___ ]]'
+  console.log(user_text)
   // actual synthesis
   console.log('  Calling synthesize...');
   tts.synthesize(
     user_text,
     function cb(samples, events) {
+    	console.log(events)
       //console.log('  Receiving synthesis samples...');
       if (!samples) {
         if (pusher) {
@@ -259,7 +262,7 @@ function armbh(cb) {
     function()
     {
 			window.espeak='1';
-    	if(window.suvacnm=='1')
+    	if(window.suvacnm==='1')
     		window.cb()
     }
   );

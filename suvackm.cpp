@@ -224,7 +224,7 @@ int main()
 {
 	EM_ASM(
 	window.suvacnm='1';
-	if(window.espeak=='1')window.cb()
+	if(window.espeak==='1')window.cb()
 	);
 }
 const char* anulekh(char *lekh);
