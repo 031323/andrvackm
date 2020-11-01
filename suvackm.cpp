@@ -263,7 +263,7 @@ const char* anulekh(char *lekh)
 		वाचकम् मुखम्({(std::pair<वर्णः,int> (*)(void*))([](void* d){return (*static_cast<decltype(क्रमणम्)*>(d))();}),&क्रमणम्});
 		#ifdef EMSCRIPTEN
 		vilekh=मुखम्.वाचनम्();
-		free(lekh);
+		//free(lekh);
 		return vilekh.c_str();
 		#else
 		मुखम्.वाचनम्();
