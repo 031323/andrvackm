@@ -145,7 +145,7 @@ function stgnm() {
   console.log('Leaving stop()');
 } // end of stop()
 
-function vacnm(text) {
+function vacnm(text,antym) {
 	console.log(text)
   console.log('Inside speak()');
 
@@ -173,16 +173,13 @@ function vacnm(text) {
 	
   var now = Date.now();
   chunkID = 0;
-
   console.log('  Creating pusher...');
   pusher = new PushAudioNode(
     ctx,
     function() {
       //console.log('PushAudioNode started!', ctx.currentTime, pusher.startTime);
     },
-    function() {
-      //console.log('PushAudioNode ended!', ctx.currentTime - pusher.startTime);
-    },
+    antym,
     pusher_buffer_size
   );
   pusher.connect(ctx.destination);
