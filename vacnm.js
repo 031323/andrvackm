@@ -251,11 +251,22 @@ function resetRate() {
 function resetVoice() {
   document.getElementById('default-voice').selected = true;
 }
+var scripts = document.getElementsByTagName("script"),
+    src = scripts[scripts.length-1].src;
+    
 function armbh(cb) {
+	workerUrl=src.substring(0, src.lastIndexOf("/"))+'/js/espeakng.worker.js';
+	//workerUrl="https://031323.github.io/suvak/js/espeakng.worker.js"
+	/*var blob;
+			blob = new Blob(["importScripts('" + workerUrl + "');"], { "type": 'application/javascript' });
+		
+	var url = window.URL || window.webkitURL;
+	var blobUrl = url.createObjectURL(blob);
+	console.log(blobUrl)*/
   console.log('Creating eSpeakNG instance...');
   window.cb=cb
   tts = new eSpeakNG(
-    'js/espeakng.worker.js',
+  	workerUrl,
     function()
     {
 			window.espeak='1';
