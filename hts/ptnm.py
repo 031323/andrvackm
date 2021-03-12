@@ -7,16 +7,18 @@ import lbllr
 lekh=[]
 ptitani=[]
 p=None
+htsvoice=""
 def vacnm(lekkrmh):
 	global lekh
 	global ptitani
+	global htsvoice
 	if not ptitani[lekkrmh]:
 		ptitani[lekkrmh]=True
 		lab,mono=lbllr.labeller(lekh[lekkrmh])
 		sncika=open('./1/'+str(lekkrmh)+'.lab','w')
 		sncika.write(lab)
 		sncika.close()
-		system('~/Downloads/hts_engine_API-1.10/bin/hts_engine -m ../../suvak.htsvoice -jf 0 -g 1 -ot ./1/'+str(lekkrmh)+'.trace -ow ./1/'+str(lekkrmh)+'.wav ./1/'+str(lekkrmh)+'.lab')
+		system('~/Downloads/hts_engine_API-1.10/bin/hts_engine -m '+htsvoice+' -g 1 -ot ./1/'+str(lekkrmh)+'.trace -ow ./1/'+str(lekkrmh)+'.wav ./1/'+str(lekkrmh)+'.lab')
 		#system('~/Downloads/hts_engine_API-1.10/bin/hts_engine -m ../marathiHTS/voices/ver1/cmu_us_arctic_slt.htsvoice -g 1 -ot ./1/'+str(lekkrmh)+'.trace -ow ./1/'+str(lekkrmh)+'.wav ./1/'+str(lekkrmh)+'.lab')
 	global p
 	if p:p.terminate()
@@ -92,9 +94,12 @@ def ptnm(nam,adikrm=0):
 	if p:p.terminate()
 def main():
 	import argparse
+	global htsvoice
 	parser = argparse.ArgumentParser('ptnm')
-	parser.add_argument('infile',metavar='path')
-	parser.add_argument('-l',nargs='?',type=int,default=0)
+	parser.add_argument('htsvoice')
+	parser.add_argument('path')
+	parser.add_argument('-l',nargs='?',type=int,default=0,help='adykrmh')
 	args = parser.parse_args()
-	ptnm(args.infile,args.l)
+	htsvoice=args.htsvoice
+	ptnm(args.path,args.l)
 main()

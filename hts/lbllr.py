@@ -29,29 +29,48 @@ def varnzanirnzayah(word):
                 else:
                     varnzaah+=[shabdah[i],'अ']
                     svrah+=[3,svrh]
-            elif shabdah[i] in 'अआइईउऊऋॠऌॡएऐओऔ'+'ं'+'ः':
+            elif shabdah[i] in 'अआइईउऊऋॠऌॡएऐओऔ':
                 varnzaah+=[shabdah[i]]
                 svrah+=[svrh]
+            elif shabdah[i] in 'ं'+'ः':
+            	varnzaah+=[shabdah[i]]
+            	svrah+=[3]
             elif shabdah[i] == 'ँ':
                 pass
                 #varnzaah[-1]+='ँ'
             elif shabdah[i]=='॒':
                 svrh=2
-                svrah[-1]=0
+                for j in range(len(varnzaah)-1,-1,-1):
+                	if varnzaah[j] in 'अआइईउऊऋॠऌॡएऐओऔ':
+                		svrah[j]=0;break;
             elif shabdah[i]=='॑':
-                svrh=0
-                svrah[-1]=1
+            		if svrh==2:
+            			svrh=0
+            			for j in range(len(varnzaah)-1,-1,-1):
+            				if varnzaah[j] in 'अआइईउऊऋॠऌॡएऐओऔ':
+            					svrah[j]=0;break;
+            		else:
+            			svrh=0
+            			for j in range(len(varnzaah)-1,-1,-1):
+            				if varnzaah[j] in 'अआइईउऊऋॠऌॡएऐओऔ':
+            					svrah[j]=1;break;
                 
         
-        vrnah=[]
-        dvitv=[]
+        vrnah=['sil']
+        dvitv=[False]
+        svrah2=[3]
         for i in range(0,len(varnzaah)):
             #if varnzaah[i]=="ऐ":vrnah+=['a','i']
             #elif varnzaah[i]=="औ":vrnah+=['a','u']
             #else:
             vrnah.append(transliterate[varnzaah[i]])
             dvitv.append(False)
-            if varnzaah[i]=='ॠ':vrnah.append('R')
+            svrah2.append(svrah[i])
+            if varnzaah[i]=='ॠ':
+            	vrnah.append('R')
+            	dvitv.append(False)
+            	svrah2.append(svrah[i])
+            
             #if varnzaah[i] in 'आ इ ई उ ऊ ऋ ॠ ऌ ॡ ए ऐ ओ औ'.split(' ') and i+1<len(varnzaah):
             #	if varnzaah[i+1] in 'आ इ ई उ ऊ ऋ ॠ ऌ ॡ ए ऐ ओ औ'.split(' '):vrnah.append('X')
             #if transliterate[varnzaah[i]][0] in ['k','g','c','j','T','D','t','d','p','b'] and (i+1)<len(varnzaah):
@@ -62,6 +81,7 @@ def varnzanirnzayah(word):
             	if transliterate[varnzaah[i-1]][0]==transliterate[varnzaah[i]][0]:
             		vrnah.pop(-2)
             		dvitv.pop(-2)
+            		svrah2.pop(-2)
             		#vrnah[-1]=vrnah[-1]+'x2'
             		dvitv[-1]=True
             if transliterate[varnzaah[i]]=='H' and (i+1)<len(varnzaah):
@@ -72,23 +92,49 @@ def varnzanirnzayah(word):
             	if vrnah[-2]==vrnah[-1]:
             		vrnah.pop(-2)
             		dvitv.pop(-2)
+            		svrah2.pop(-2)
             		#vrnah[-1]=vrnah[-1]+'x2'
             		dvitv[-1]=True
-        return vrnah,dvitv
+        vrnah+=['sil']
+        dvitv+=[False]
+        svrah2+=[3]
+        svrah=svrah2
+        for i in range(0,len(vrnah)):
+            if svrah[i]==0:
+                svrh=0
+                break
+            elif svrah[i]==1 or svrah[i]==2:
+                svrh=2
+                break
+        for i in range(0,len(vrnah)):
+            svrahL+=[svrh]
+            if svrah[i]!=3:
+                svrh=svrah[i]
+                for j in range(i-1,-1,-1):
+                    svrahR[j]=svrah[i]
+                    if svrah[j]!=3:break
+            if svrh==2:svrahR+=[2]
+            else:svrahR+=[0]
+        
+        return vrnah,dvitv,svrah,svrahL,svrahR
 
 
 def labeller(d):
-	vrnah=['sil']
-	dvitv=[False]
-	for c in list(filter(None,re.split(',|;',d))):
-		for w in [c]:
-			wv,wdv=varnzanirnzayah(w)
-			if len(wv)==0:continue
-			#if wv[-1]=='a':wv.pop()
-			vrnah+=wv
-			dvitv+=wdv
-		vrnah+=['sil']
-		dvitv+=[False]
+	#vrnah=['sil']
+	#dvitv=[False]
+	#for c in list(filter(None,re.split(',|;',d))):
+	#	for w in [c]:
+	#		wv,wdv=varnzanirnzayah(w)
+	#		if len(wv)==0:continue
+	#		#if wv[-1]=='a':wv.pop()
+	#		vrnah+=wv
+	#		dvitv+=wdv
+	#	vrnah+=['sil']
+	#	dvitv+=[False]
+	vrnah,dvitv,svrah,svrahL,svrahR=varnzanirnzayah(d)
+	svrah=[{0:'A',2:'U',1:'S',3:'V'}[a] for a in svrah]
+	svrahR=[{0:'A',2:'U',1:'S',3:'V'}[a] for a in svrahR]
+	svrahL=[{0:'A',2:'U',1:'S',3:'V'}[a] for a in svrahL]
 	lab=""
 	mono=""
 	if len(vrnah)==0:return lab,mono
@@ -106,6 +152,12 @@ def labeller(d):
 				lab+='X' if dvitv[upkrmh] else 'O'
 			else:lab+='O'
 			lab+='/'
+		j=13
+		for pdy in [svrah,svrahL,svrahR]:
+			lab+=str(j)+':'
+			lab+=pdy[krmh]
+			lab+='/'
+			j+=1
 		mono+=vrnah[krmh]+'\n'
 		lab+='\n'
 	return lab,mono
