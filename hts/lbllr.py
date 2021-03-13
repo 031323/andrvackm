@@ -44,18 +44,17 @@ def varnzanirnzayah(word):
                 	if varnzaah[j] in 'अआइईउऊऋॠऌॡएऐओऔ':
                 		svrah[j]=0;break;
             elif shabdah[i]=='॑':
-            		if svrh==2:
-            			svrh=0
-            			for j in range(len(varnzaah)-1,-1,-1):
-            				if varnzaah[j] in 'अआइईउऊऋॠऌॡएऐओऔ':
-            					svrah[j]=0;break;
-            		else:
             			svrh=0
             			for j in range(len(varnzaah)-1,-1,-1):
             				if varnzaah[j] in 'अआइईउऊऋॠऌॡएऐओऔ':
             					svrah[j]=1;break;
                 
-        
+        u=True
+        for i in range(0,len(svrah)):
+        	if svrah[i]==0:u=False
+        	if svrah[i]==2:u=True
+        	if svrah[i]==1 and u:
+        		svrah[i]=0
         vrnah=['sil']
         dvitv=[False]
         svrah2=[3]
