@@ -243,6 +243,9 @@ size_t HTS_ftell(HTS_File * fp)
    if (fp == NULL) {
       return 0;
    } else if (fp->type == HTS_FILE) {
+   #ifdef __EMSCRIPTEN__
+   return ftell((FILE *) fp->pointer);
+   #else
       fpos_t pos;
       fgetpos((FILE *) fp->pointer, &pos);
 #if defined(_WIN32) || defined(__CYGWIN__) || defined(__APPLE__) || defined(__ANDROID__)
@@ -250,6 +253,7 @@ size_t HTS_ftell(HTS_File * fp)
 #else
       return (size_t) pos.__pos;
 #endif                          /* _WIN32 || __CYGWIN__ || __APPLE__ || __ANDROID__ */
+#endif
    } else if (fp->type == HTS_DATA) {
       HTS_Data *d = (HTS_Data *) fp->pointer;
       return d->index;
