@@ -49,7 +49,7 @@ def varnzanirnzayah(word):
             				if varnzaah[j] in 'अआइईउऊऋॠऌॡएऐओऔ':
             					svrah[j]=1;break;
                 
-        u=True
+        u=False
         for i in range(0,len(svrah)):
         	if svrah[i]==0:u=False
         	if svrah[i]==2:u=True

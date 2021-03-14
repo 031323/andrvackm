@@ -57,6 +57,8 @@ HTS_ENGINE_C_START;
 
 #include <stdlib.h>
 
+#include<emscripten.h>
+
 #include "HTS_engine.h"
 
 /* usage: output usage */
@@ -98,8 +100,47 @@ void usage(void)
 
    exit(0);
 }
+int main()
+{
+	EM_ASM({window.hts='1';
+	if (typeof window.hts_prtikrm !== "undefined") { 
+    // safe to use the function
+    window.hts_prtikrm()
+	}
+	});
+	return 0;
+}
+HTS_Engine engine;
+void hts_armbh(char *fn_voice)
+{
+	char *fn_voices[]={fn_voice};
+	HTS_Engine_initialize(&engine);
+	HTS_Engine_load(&engine, fn_voices, 1);
+	HTS_Engine_set_phoneme_alignment_flag(&engine, TRUE);
+	HTS_Engine_set_msd_threshold(&engine, 1, 0.5);
+	HTS_Engine_set_volume(&engine,1);
+}
 
-int main(int argc, char **argv)
+size_t hts_vrnanvh(size_t krmh)
+{
+	size_t nstate = HTS_Engine_get_nstate(&engine);
+	size_t duration=0;
+  for (size_t j = krmh*nstate ; j < krmh*nstate+nstate; j++)
+  	duration+=HTS_Engine_get_state_duration(&engine,j);
+	return duration;
+}
+double hts_anukalh(){return (double)engine.condition.fperiod/(double)engine.condition.sampling_frequency;}
+void hts_vacnm(char* labfn,char* ow,double(* svradesh)(size_t))
+{
+	engine.svradesh=svradesh;
+	HTS_Engine_synthesize_from_fn(&engine, labfn);
+	FILE* wavfp=fopen(ow,"wb");
+	HTS_Engine_save_riff(&engine, wavfp);
+	fclose(wavfp);
+	EM_ASM({console.log('atsbdnm')});
+}
+
+int main__(int argc, char **argv)
 {
    int i;
    double f;
