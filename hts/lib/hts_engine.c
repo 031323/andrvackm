@@ -129,6 +129,9 @@ size_t hts_vrnanvh(size_t krmh)
   	duration+=HTS_Engine_get_state_duration(&engine,j);
 	return duration;
 }
+size_t HTS_Label_get_size(HTS_Label * label);
+size_t hts_vrnsnkya()
+{return HTS_Label_get_size(&engine.label);}
 double hts_anukalh(){return (double)engine.condition.fperiod/(double)engine.condition.sampling_frequency;}
 void hts_vacnm(char* labfn,char* ow,double(* svradesh)(size_t))
 {
