@@ -1,5 +1,3 @@
-//args='-m assets/suvak3.htsvoice -u 0.2 -g 1 -ow assets/0.wav assets/0.lab'.split(' ')
-//Module.arguments=args
 transliterate={
             "क":"k", "ख":"kh", "ग":"g", "घ":"gh", "ङ":"N1", "च":"c", "छ":"ch", "ज":"j", "झ":"jh", "ञ":"N2", "ट":"T", "ठ":"Th", "ड":"D", "ढ":"Dh", "ण":"N3", "त":"t", "थ":"th", "द":"d", "ध":"dh", "न":"n", "प":"p", "फ":"ph", "ब":"b", "भ":"bh", "म":"m", "य":"y", "र":"r", "ल":"l", "ळ":"L", "व":"v", "श":"s1", "ष":"s2", "स":"s", "ह":"h", "ं":"M", "ः":"H", "अ":"a", "आ":"A", "इ":"i", "ई":"I", "उ":"u", "ऊ":"U", "ऋ":"R", "ॠ":"R", "ऌ":"l1", "ॡ":"l2", "ए":"e", "ऐ":"ai", "ओ":"o", "औ":"au", "लँ":"ln"
         }
@@ -52,7 +50,9 @@ function varnzanirnzayah(word)
             	}
             else if (shabdah[i] == 'ँ'){
             	//console.log('c3')
-                nop}
+                varnzaah.push('न')
+                svrah.push(3)
+                }
                 //varnzaah[-1]+='ँ'
             else if(shabdah[i]=='॒'){
             	//console.log('c4')
@@ -74,7 +74,7 @@ function varnzanirnzayah(word)
             		}
         //console.log(varnzaah) 
         }
-        //console.log(varnzaah) 
+        console.log(varnzaah) 
         u=false
         for (i=0;i<len(svrah);i++){
         	if (svrah[i]==0)u=false
@@ -107,24 +107,24 @@ function varnzanirnzayah(word)
             //console.log('thisis')
             if (['k','g','c','j','T','D','t','d','p','b'].includes(transliterate[varnzaah[i]][0] )&& i>0){
             	if (transliterate[varnzaah[i-1]][0]==transliterate[varnzaah[i]][0]){
-            		vrnah.pop(-2)
-            		dvitv.pop(-2)
-            		svrah2.pop(-2)
+            		vrnah.splice(vrnah.length-2,1)
+            		dvitv.splice(vrnah.length-2,1)
+            		svrah2.splice(vrnah.length-2,1)
             		//vrnah[-1]=vrnah[-1]+'x2'
-            		dvitv[-1]=true
+            		dvitv[vrnah.length-1]=true
             	}
             }
             if(transliterate[varnzaah[i]]=='H' && (i+1)<len(varnzaah)){
-            	if(transliterate[varnzaah[i+1]][0]=='s')vrnah[-1]=transliterate[varnzaah[i+1]]
-            	if(transliterate[varnzaah[i+1]][0]=='p')vrnah[-1]='f'
+            	if(transliterate[varnzaah[i+1]][0]=='s')vrnah[vrnah.length-1]=transliterate[varnzaah[i+1]]
+            	if(transliterate[varnzaah[i+1]][0]=='p')vrnah[vrnah.length-1]='f'
             }
-            if('y r l L v s1 s2 s h N1 N2 N3 n m'.split(' ').includes(vrnah[-1] ) && i>0){
-            	if(vrnah[-2]==vrnah[-1]){
-            		vrnah.pop(-2)
-            		dvitv.pop(-2)
-            		svrah2.pop(-2)
+            if('y r l L v s1 s2 s h N1 N2 N3 n m'.split(' ').includes(vrnah[vrnah.length-1] ) && i>0){
+            	if(vrnah[vrnah.length-2]==vrnah[vrnah.length-1]){
+            		vrnah.splice(vrnah.length-2,1)
+            		dvitv.splice(vrnah.length-2,1)
+            		svrah2.splice(vrnah.length-2,1)
             		//vrnah[-1]=vrnah[-1]+'x2'
-            		dvitv[-1]=true
+            		dvitv[vrnah.length-1]=true
             	}
             }
         }
@@ -160,6 +160,7 @@ function varnzanirnzayah(word)
 function str(x){return x.toString()}
 function labeller(d){
 	arr=varnzanirnzayah(d)
+	//console.log(arr[1])
 	vrnah=arr[0],dvitv=arr[1],svrah=arr[2],svrahL=arr[3],svrahR=arr[4]
 	svrah=svrah.map((a)=>{return {0:'A',2:'U',1:'S',3:'V'}[a]})
 	svrahR=svrahR.map((a)=>{return {0:'A',2:'U',1:'S',3:'V'}[a]})
@@ -168,6 +169,9 @@ function labeller(d){
 	mono=""
 	if(len(vrnah)==0)return lab
 	for(krmh=0;krmh<len(vrnah);krmh++){
+		//console.log(vrnah[krmh])
+		//console.log(dvitv[krmh])
+		
 		lab+='-'+vrnah[krmh]+'+/'
 		for( upkrmh=krmh-2;upkrmh<krmh+3;upkrmh++){
 			lab+=str(upkrmh-krmh+2)+':'
@@ -179,7 +183,7 @@ function labeller(d){
 		for( upkrmh=krmh-2;upkrmh<krmh+3;upkrmh++){
 			lab+=str(upkrmh-krmh+2+5)+':'
 			if(upkrmh>=0 && upkrmh<len(vrnah))
-				lab+=dvitv[upkrmh]?'x':'O'
+				lab+=dvitv[upkrmh]?'X':'O'
 			else lab+='O'
 			lab+='/'
 		}
@@ -196,11 +200,10 @@ function labeller(d){
 		mono+=vrnah[krmh]+'\n'
 		lab+='\n'
 	}
-	console.log(vrnah)
-	console.log(svrah)
+	//console.log(vrnah)
+	//console.log(svrah)
 	return [len(vrnah),lab,svrah,svrahL,svrahR]
 }
-
 convertUint8ArrayToBinaryString =function(u8Array) {
 	var i, len = u8Array.length, b_str = "";
 	for (i=0; i<len; i++) {
@@ -317,9 +320,13 @@ suvacnarmbh=function(vakym,prtikrm)
 	var gnnm=false;
 	var vrnanth=[]
 	var anukalh=Module.ccall('hts_anukalh','double',[],[])
+	var f0_=0
 	FS.writeFile('assets/0.lab',arr[1])
 	var fp=addFunction(function (f){
 		//console.log(f)
+		if(f-f0_!=1)
+			console.log('f-f0: '+(f-f0_).toString())
+		f0_=f
 		if(!gnnm)
 		{
 			sum=0
