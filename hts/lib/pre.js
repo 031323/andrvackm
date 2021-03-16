@@ -229,6 +229,7 @@ suvacnm=function(vakym) {
 	var anukalh=Module.ccall('hts_anukalh','double',[],[])
 	FS.writeFile('assets/0.lab',arr[1])
 	var fp=addFunction(function (f){
+		console.log(f)
 		if(!gnnm)
 		{
 			sum=0
@@ -274,3 +275,94 @@ suvacnm=function(vakym) {
 	var snd=new Audio('data:audio/wav;base64,' + btoa(convertUint8ArrayToBinaryString(FS.readFile('assets/0.wav'))))
 	snd.play()
 };
+
+var context=new AudioContext();
+var time;
+suvacnarmbh=function(vakym,prtikrm)
+{
+	time=Date.now()
+	context.resume()
+	var scriptNode = context.createScriptProcessor(4096, 1, 1);
+	scriptNode.onaudioprocess = function(audioProcessingEvent) {
+		
+  // The output buffer contains the samples that will be modified and played
+  var outputBuffer = audioProcessingEvent.outputBuffer;
+
+  // Loop through the output channels (in this case there is only one)
+  for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
+    var outputData = outputBuffer.getChannelData(channel);
+		
+    // Loop through the samples
+    for (var sample = 0; sample < outputBuffer.length; sample++) {
+      let agtih=Module.ccall('pro_sbdh','float',[],[])
+      //console.log(agtih)
+      if(agtih>2.0)
+      {
+      	removeFunction(fp)
+      	scriptNode.disconnect(context.destination)
+      	for(;sample<outputBuffer.length;sample++)
+	 		     outputData[sample]=0.0;
+ 		    prtikrm()
+				console.log(Date.now()-time)
+      }
+      else outputData[sample]=agtih
+    }
+  }
+	}
+	arr=labeller(vakym)
+	arr[1][0]='0 0 '+arr[1][0]
+	var purvanvh=0
+	var vrnanvh=0;
+	var vrnkrmh=0
+	var gnnm=false;
+	var vrnanth=[]
+	var anukalh=Module.ccall('hts_anukalh','double',[],[])
+	FS.writeFile('assets/0.lab',arr[1])
+	var fp=addFunction(function (f){
+		//console.log(f)
+		if(!gnnm)
+		{
+			sum=0
+			for(i=0;i<arr[0];i++)
+			{
+				v=Module.ccall('hts_vrnanvh','number',['number'],[i])
+				sum+=v
+				vrnanth.push(sum)
+			}
+			vrnanvh=vrnanth[0]
+		}
+		if(f>vrnanvh+purvanvh)
+		{
+			while(f>vrnanth[vrnkrmh])vrnkrmh+=1;
+			//console.log(vrnkrmh)
+			//console.log(arr[2][vrnkrmh])
+			purvanvh=vrnanth[vrnkrmh-1]
+			vrnanvh=vrnanth[vrnkrmh]-vrnanth[vrnkrmh-1]
+			//console.log(vrnanvh)
+		}
+		let us=4.9,as=4.5
+		//return us
+		if(arr[2][vrnkrmh]=='A')return as;
+		else if(arr[2][vrnkrmh]=='U')return us;
+		else if(arr[2][vrnkrmh]=='S')
+		{
+			if((f-purvanvh)*anukalh<0.06)return us+(as-us)*(f-purvanvh)*anukalh/0.06
+			else return as
+		}
+		else if(arr[2][vrnkrmh]=='V')
+		{
+			let p2=arr[4][vrnkrmh]=='A'?as:us;
+			let p1=p2;
+			if(vrnkrmh>0)if(arr[2][vrnkrmh-1]!='V')
+				p1=arr[3][vrnkrmh]=='U'?us:as;
+			if(p1!=p2)return p1+(p2-p1)*(f-purvanvh)/vrnanvh
+			else return p1
+		}
+		return as
+	},'di')
+	console.log(Date.now()-time)
+	Module.ccall('pro_vacnarmbh',null,['string','number'],['assets/0.lab',fp])	
+	console.log(Date.now()-time)
+	scriptNode.connect(context.destination)
+}
+

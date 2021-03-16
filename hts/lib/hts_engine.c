@@ -61,6 +61,8 @@ HTS_ENGINE_C_START;
 
 #include "HTS_engine.h"
 
+#include "HTS_hidden.h"
+
 /* usage: output usage */
 void usage(void)
 {
@@ -141,6 +143,96 @@ void hts_vacnm(char* labfn,char* ow,double(* svradesh)(size_t))
 	HTS_Engine_save_riff(&engine, wavfp);
 	fclose(wavfp);
 	EM_ASM({console.log('atsbdnm')});
+}
+
+HTS_GStreamSet * gss; HTS_PStreamSet * pss; size_t stage; HTS_Boolean use_log_gain; size_t sampling_rate; size_t fperiod; double alpha; double beta; HTS_Boolean * stop; double volume; HTS_Audio * audio;double(* svradesh)(size_t);
+
+   size_t i, j, k;
+   size_t msd_frame;
+   HTS_Vocoder v;
+   size_t nlpf = 0;
+   double *lpf = NULL;
+   
+void pro_vacnarmbh(char* labfn,double(* svradesh0)(size_t))
+{
+	HTS_Engine_refresh(&engine);
+	HTS_Engine_generate_state_sequence_from_fn(&engine,labfn);
+	HTS_Engine_generate_parameter_sequence(&engine);
+
+	gss=&engine.gss; pss=&engine.pss; stage=engine.condition.stage; use_log_gain=engine.condition.use_log_gain;
+	sampling_rate=engine.condition.sampling_frequency; fperiod=engine.condition.fperiod; alpha=engine.condition.alpha; 
+	beta=engine.condition.beta; stop=&engine.condition.stop; volume=engine.condition.volume;
+	audio=engine.condition.audio_buff_size > 0 ? &engine.audio:NULL;
+	svradesh=svradesh0;
+	
+
+   /* initialize */
+   gss->nstream = HTS_PStreamSet_get_nstream(pss);
+   gss->total_frame = HTS_PStreamSet_get_total_frame(pss);
+   gss->total_nsample = fperiod * gss->total_frame;
+   gss->gstream = (HTS_GStream *) HTS_calloc(gss->nstream, sizeof(HTS_GStream));
+   for (i = 0; i < gss->nstream; i++) {
+      gss->gstream[i].vector_length = HTS_PStreamSet_get_vector_length(pss, i);
+      gss->gstream[i].par = (double **) HTS_calloc(gss->total_frame, sizeof(double *));
+      for (j = 0; j < gss->total_frame; j++)
+         gss->gstream[i].par[j] = (double *) HTS_calloc(gss->gstream[i].vector_length, sizeof(double));
+   }
+   gss->gspeech = (double *) HTS_calloc(gss->total_nsample, sizeof(double));
+
+   /* copy generated parameter */
+   for (i = 0; i < gss->nstream; i++) {
+      if (HTS_PStreamSet_is_msd(pss, i)) {      /* for MSD */
+         for (j = 0, msd_frame = 0; j < gss->total_frame; j++)
+            if (HTS_PStreamSet_get_msd_flag(pss, i, j) == TRUE) {
+               for (k = 0; k < gss->gstream[i].vector_length; k++)
+                  gss->gstream[i].par[j][k] = HTS_PStreamSet_get_parameter(pss, i, msd_frame, k);
+               msd_frame++;
+            } else
+               for (k = 0; k < gss->gstream[i].vector_length; k++)
+                  gss->gstream[i].par[j][k] = HTS_NODATA;
+      } else {                  /* for non MSD */
+         for (j = 0; j < gss->total_frame; j++)
+            for (k = 0; k < gss->gstream[i].vector_length; k++)
+               gss->gstream[i].par[j][k] = HTS_PStreamSet_get_parameter(pss, i, j, k);
+      }
+   }
+   /* synthesize speech waveform */
+   HTS_Vocoder_initialize(&v, gss->gstream[0].vector_length - 1, stage, use_log_gain, sampling_rate, fperiod);
+   if (gss->nstream >= 3)
+      nlpf = gss->gstream[2].vector_length;
+   i=0;
+   j=0;
+}
+
+float pro_sbdh()
+{
+	if(j%fperiod==0)
+	{
+		i=j/fperiod;
+		if(i==gss->total_frame)
+		{
+			HTS_Vocoder_clear(&v);
+		  if (audio)
+      HTS_Audio_flush(audio);
+      return 2.34567;
+		}
+			if (gss->nstream >= 3)
+      lpf = &gss->gstream[2].par[i][0];
+      HTS_Vocoder_synthesize(&v, gss->gstream[0].vector_length - 1, 
+      gss->gstream[1].par[i][0]==LZERO?LZERO:
+      (*svradesh)(i), 
+      &gss->gstream[0].par[i][0], nlpf, lpf, alpha, beta, volume, &gss->gspeech[j], audio);
+	}
+	double x=gss->gspeech[j];
+	j+=1;
+	float temp;
+	if (x > 32767.0)
+         temp = 1;
+      else if (x < -32768.0)
+         temp = -1;
+      else
+         temp = x/32768.0;
+  return temp;
 }
 
 int main__(int argc, char **argv)
