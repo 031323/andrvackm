@@ -92,12 +92,7 @@
 <body style="padding:0;margin:0;background-color:black;">
 <div style="margin:0;width:100%;height:100%;display:table">
 <div style="text-align:center;display:table-cell;vertical-align:middle;margin:auto">
-<textarea id="texttospeak" style="display:none">नम॑स्ते। किमप्यत्र॑लिख्यताम्। </textarea>
-<br>
-<button style='display:none' id="play">?</button>
-<!--
 <svg  id="nodnm" style="margin:0;display:none;width:15em;max-width:90vw;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100">
--->
 <rect width="100" x="0" height="100" rx="0" ry="0" fill="rgb(255,255,255)"/>
 <rect width="100" x="100" height="100" rx="0" ry="0" fill="rgb(255,255,255)"/>
 <rect width="100" x="200" height="100" rx="0" ry="0" fill="rgb(150,150,150)"/>
@@ -109,46 +104,26 @@
 	<div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 </div>
 </div></div>
-<script src="hts.js"></script>
+<script src="suvak/js/espeakng.js"></script>
+<script src="suvak/suvackm.js"></script>
+<script src="suvak/vacnm.js"></script>
 <script>
-var vakyani=[]
-var vakykrmh=0
-suvagarmbh(function(){
+armbh(function(){
 setTimeout(function(){
 	document.getElementById('prtiksnm').style.display='none';
-	document.getElementById('texttospeak').style.display='';
-	document.getElementById('play').style.display='';
-	document.getElementById('play').onclick=function()
-		{
-			adym();
-			vakyani=document.getElementById('texttospeak').value.split(/[।॥,\.]+/)
-			vakykrmh=0
-			krmnm()
-		}
+	document.getElementById('nodnm').style.display='inline-block';
+	document.getElementById('nodnm').onclick="adym();vacnm('तन्त्रा॑णिसन्ती॒हवि॒श्वरू॑पाणि।',antym);"
 	}
 	,100);
 })
-function krmnm()
-{
-	console.log('vakykrmh'+vakykrmh.toString())
-	if(vakykrmh<vakyani.length)
-	{
-		suvacnarmbh(vakyani[vakykrmh],krmnm);
-		vakykrmh+=1
-	}
-	else
-	{
-		antym()
-	}
-}
 function adym()
 {
-	document.getElementById('play').disabled=true;
+	document.getElementById('nodnm').children[1].style.fill='grey';
 }
 function antym()
 {
 	console.log('antym')
-	document.getElementById('play').disabled=false;
+	document.getElementById('nodnm').children[1].style.fill='';
 }
 </script>
 </body>

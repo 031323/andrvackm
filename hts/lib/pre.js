@@ -310,7 +310,7 @@ suvacnarmbh=function(vakym,prtikrm)
   }
 	}
 	arr=labeller(vakym)
-	arr[1][0]='0 0 '+arr[1][0]
+	arr[1]='0 500000 '+arr[1]
 	var purvanvh=0
 	var vrnanvh=0;
 	var vrnkrmh=0
