@@ -168,11 +168,13 @@ function labeller(d){
 	lab=""
 	mono=""
 	if(len(vrnah)==0)return lab
+	let krmh=0
 	for(krmh=0;krmh<len(vrnah);krmh++){
 		//console.log(vrnah[krmh])
 		//console.log(dvitv[krmh])
 		
 		lab+='-'+vrnah[krmh]+'+/'
+		let upkrmh=0
 		for( upkrmh=krmh-2;upkrmh<krmh+3;upkrmh++){
 			lab+=str(upkrmh-krmh+2)+':'
 			if(upkrmh>=0 && upkrmh<len(vrnah))
@@ -222,17 +224,30 @@ suvagarmbh=function(prtikrm) {
 		window.hts_prtikrm()
 	}
 };
-suvacnm=function(vakym) {
+var fp;
+vakstapnm=function(vakym)
+{
 	arr=labeller(vakym)
-	var purvanvh=0
+	arr[1]='0 500000 '+arr[1]
+	/*var purvanvh=0
 	var vrnanvh=0;
 	var vrnkrmh=0
 	var gnnm=false;
 	var vrnanth=[]
 	var anukalh=Module.ccall('hts_anukalh','double',[],[])
+	var f0_=0
+	*/
 	FS.writeFile('assets/0.lab',arr[1])
-	var fp=addFunction(function (f){
-		console.log(f)
+	Module.ccall('svrstapnm',null,['number','string','string','string'],[arr[0],
+		arr[2].toString().replaceAll(',',''),
+		arr[3].toString().replaceAll(',',''),
+		arr[4].toString().replaceAll(',','')])
+	fp=Module.ccall('svradesadesh','number',[],[])
+	/*addFunction(function (f){
+		//console.log(f)
+		if(f-f0_!=1)
+			console.log('f-f0: '+(f-f0_).toString())
+		f0_=f
 		if(!gnnm)
 		{
 			sum=0
@@ -243,6 +258,7 @@ suvacnm=function(vakym) {
 				vrnanth.push(sum)
 			}
 			vrnanvh=vrnanth[0]
+			gnnm=true
 		}
 		if(f>vrnanvh+purvanvh)
 		{
@@ -272,9 +288,12 @@ suvacnm=function(vakym) {
 			else return p1
 		}
 		return as
-	},'di')
+	},'di')*/
+}
+suvacnm=function(vakym) {
+	vakstapnm(vakym)
 	Module.ccall('hts_vacnm',null,['string','string','number'],['assets/0.lab','assets/0.wav',fp])
-	removeFunction(fp)	
+	//removeFunction(fp)	
 	var snd=new Audio('data:audio/wav;base64,' + btoa(convertUint8ArrayToBinaryString(FS.readFile('assets/0.wav'))))
 	snd.play()
 };
@@ -301,7 +320,7 @@ suvacnarmbh=function(vakym,prtikrm)
       //console.log(agtih)
       if(agtih>2.0)
       {
-      	removeFunction(fp)
+      	//removeFunction(fp)
       	scriptNode.disconnect(context.destination)
       	for(;sample<outputBuffer.length;sample++)
 	 		     outputData[sample]=0.0;
@@ -312,61 +331,7 @@ suvacnarmbh=function(vakym,prtikrm)
     }
   }
 	}
-	arr=labeller(vakym)
-	arr[1]='0 500000 '+arr[1]
-	var purvanvh=0
-	var vrnanvh=0;
-	var vrnkrmh=0
-	var gnnm=false;
-	var vrnanth=[]
-	var anukalh=Module.ccall('hts_anukalh','double',[],[])
-	var f0_=0
-	FS.writeFile('assets/0.lab',arr[1])
-	var fp=addFunction(function (f){
-		//console.log(f)
-		if(f-f0_!=1)
-			console.log('f-f0: '+(f-f0_).toString())
-		f0_=f
-		if(!gnnm)
-		{
-			sum=0
-			for(i=0;i<arr[0];i++)
-			{
-				v=Module.ccall('hts_vrnanvh','number',['number'],[i])
-				sum+=v
-				vrnanth.push(sum)
-			}
-			vrnanvh=vrnanth[0]
-		}
-		if(f>vrnanvh+purvanvh)
-		{
-			while(f>vrnanth[vrnkrmh])vrnkrmh+=1;
-			//console.log(vrnkrmh)
-			//console.log(arr[2][vrnkrmh])
-			purvanvh=vrnanth[vrnkrmh-1]
-			vrnanvh=vrnanth[vrnkrmh]-vrnanth[vrnkrmh-1]
-			//console.log(vrnanvh)
-		}
-		let us=4.9,as=4.5
-		//return us
-		if(arr[2][vrnkrmh]=='A')return as;
-		else if(arr[2][vrnkrmh]=='U')return us;
-		else if(arr[2][vrnkrmh]=='S')
-		{
-			if((f-purvanvh)*anukalh<0.06)return us+(as-us)*(f-purvanvh)*anukalh/0.06
-			else return as
-		}
-		else if(arr[2][vrnkrmh]=='V')
-		{
-			let p2=arr[4][vrnkrmh]=='A'?as:us;
-			let p1=p2;
-			if(vrnkrmh>0)if(arr[2][vrnkrmh-1]!='V')
-				p1=arr[3][vrnkrmh]=='U'?us:as;
-			if(p1!=p2)return p1+(p2-p1)*(f-purvanvh)/vrnanvh
-			else return p1
-		}
-		return as
-	},'di')
+	vakstapnm(vakym)
 	console.log(Date.now()-time)
 	Module.ccall('pro_vacnarmbh',null,['string','number'],['assets/0.lab',fp])	
 	console.log(Date.now()-time)
