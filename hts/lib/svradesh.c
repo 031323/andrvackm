@@ -55,12 +55,29 @@ double svradesh0(size_t f){
 		}
 		else if(svrah[vrnkrmh]=='V')
 		{
+			double p1,p2;
+			p1=svrahL[vrnkrmh]=='U'||svrahR[vrnkrmh]!='A'?us:as;
+			p2=p1;
+			if(vrnkrmh>0)
+			{
+				if(svrah[vrnkrmh-1]=='A'||svrah[vrnkrmh-1]=='S')
+					p1=as;
+			}
+			if(vrnkrmh<vrnsnkya-1)
+			{
+				if(svrah[vrnkrmh+1]=='A')
+					p2=as;
+			}
+			if(p1!=p2)return p1+(p2-p1)*(double)(f-purvanvh)/(double)vrnanvh;
+			else return p1;
+			
+			/*
 			double p2=svrahR[vrnkrmh]=='A'?as:us;
 			double p1=p2;
 			if(vrnkrmh>0)if(svrah[vrnkrmh-1]!='V')
 				p1=svrahL[vrnkrmh]=='U'?us:as;
 			if(p1!=p2)return p1+(p2-p1)*(double)(f-purvanvh)/(double)vrnanvh;
-			else return p1;
+			else return p1;*/
 		}
 		return as;
 	}
