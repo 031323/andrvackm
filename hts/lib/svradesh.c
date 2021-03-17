@@ -50,7 +50,9 @@ double svradesh0(size_t f){
 		else if(svrah[vrnkrmh]=='U')return us;
 		else if(svrah[vrnkrmh]=='S')
 		{
-			if(anukalh*(double)(f-purvanvh)<0.06)return us+(as-us)*(double)(f-purvanvh)*anukalh/0.06;
+			double udattkalh=(double)vrnanvh*anukalh;
+			if(udattkalh>0.1)udattkalh=0.1;
+			if(anukalh*(double)(f-purvanvh)<udattkalh)return us+(as-us)*(double)(f-purvanvh)*anukalh/udattkalh;
 			else return as;
 		}
 		else if(svrah[vrnkrmh]=='V')
