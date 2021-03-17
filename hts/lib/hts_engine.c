@@ -207,7 +207,7 @@ void pro_vacnarmbh(char* labfn,double(* svradesh0)(size_t))
    i=0;
    j=0;
 }
-
+double svradesh0(size_t);
 float pro_sbdh()
 {
 	if(j%fperiod==0)
@@ -224,7 +224,7 @@ float pro_sbdh()
       lpf = &gss->gstream[2].par[i][0];
       HTS_Vocoder_synthesize(&v, gss->gstream[0].vector_length - 1, 
       gss->gstream[1].par[i][0]==LZERO?LZERO:
-      (*svradesh)(i), 
+      svradesh0(i), 
       &gss->gstream[0].par[i][0], nlpf, lpf, alpha, beta, volume, &gss->gspeech[j], audio);
 	}
 	double x=gss->gspeech[j];
