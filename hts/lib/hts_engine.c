@@ -104,11 +104,15 @@ void usage(void)
 }
 int main()
 {
-	EM_ASM({window.hts='1';
-	if (typeof window.hts_prtikrm !== "undefined") { 
-    // safe to use the function
-    window.hts_prtikrm()
-	}
+	EM_ASM({
+		if(typeof(window)!=="undefined")
+		{
+			window.hts='1';
+			if (typeof window.hts_prtikrm !== "undefined") { 
+   	 // safe to use the function
+  		  window.hts_prtikrm()
+			}
+		}
 	});
 	return 0;
 }

@@ -1,21 +1,21 @@
-transliterate={
+var transliterate={
             "क":"k", "ख":"kh", "ग":"g", "घ":"gh", "ङ":"N1", "च":"c", "छ":"ch", "ज":"j", "झ":"jh", "ञ":"N2", "ट":"T", "ठ":"Th", "ड":"D", "ढ":"Dh", "ण":"N3", "त":"t", "थ":"th", "द":"d", "ध":"dh", "न":"n", "प":"p", "फ":"ph", "ब":"b", "भ":"bh", "म":"m", "य":"y", "र":"r", "ल":"l", "ळ":"L", "व":"v", "श":"s1", "ष":"s2", "स":"s", "ह":"h", "ं":"M", "ः":"H", "अ":"a", "आ":"A", "इ":"i", "ई":"I", "उ":"u", "ऊ":"U", "ऋ":"R", "ॠ":"R", "ऌ":"l1", "ॡ":"l2", "ए":"e", "ऐ":"ai", "ओ":"o", "औ":"au", "लँ":"ln"
         }
 function len(x)
 {return x.length}
 function varnzanirnzayah(word)
 {
-        s=word
+        let s=word
         //shabdah=[]
         //for i in s:
         //    shabdah.push(i.encode('utf-8'))
-        shabdah=word
-        varnzaah=[]
-        svrah=[]
-        svrahL=[]
-        svrahR=[]
-        svrh=2
-        for (i=0;i<shabdah.length;i++)
+        let shabdah=word
+        let varnzaah=[]
+        let svrah=[]
+        let svrahL=[]
+        let svrahR=[]
+        let svrh=2
+        for (let i=0;i<shabdah.length;i++)
         {
             //console.log(shabdah[i])
             if('कखगघङचछजझञटठडढणतथदधनपफबभमयरलळवशषसह'.includes(shabdah[i]))
@@ -57,7 +57,7 @@ function varnzanirnzayah(word)
             else if(shabdah[i]=='॒'){
             	//console.log('c4')
                 svrh=2
-                for (j =len(varnzaah)-1;j>-1;j--){
+                for (let j =len(varnzaah)-1;j>-1;j--){
                 	if('अआइईउऊऋॠऌॡएऐओऔ'.includes(varnzaah[j] )){
                 		svrah[j]=0;break;
                 		}
@@ -66,7 +66,7 @@ function varnzanirnzayah(word)
             else if(shabdah[i]=='॑'){
             	//console.log('c5')
             			svrh=0
-            			for (j =len(varnzaah)-1;j>-1;j--){
+            			for (let j =len(varnzaah)-1;j>-1;j--){
                 	if('अआइईउऊऋॠऌॡएऐओऔ'.includes(varnzaah[j] )){
                 		svrah[j]=1;break;
                 		}
@@ -75,16 +75,16 @@ function varnzanirnzayah(word)
         //console.log(varnzaah) 
         }
         console.log(varnzaah) 
-        u=false
-        for (i=0;i<len(svrah);i++){
+        let u=false
+        for (let i=0;i<len(svrah);i++){
         	if (svrah[i]==0)u=false
         	if (svrah[i]==2)u=true
         	if (svrah[i]==1 && u)svrah[i]=0
         }
-        vrnah=['sil']
-        dvitv=[false]
-        svrah2=[3]
-        for(i=0;i<len(varnzaah);i++){
+        let vrnah=['sil']
+        let dvitv=[false]
+        let svrah2=[3]
+        for(let i=0;i<len(varnzaah);i++){
             //if varnzaah[i]=="ऐ":vrnah+=['a','i']
             //else if varnzaah[i]=="औ":vrnah+=['a','u']
             //else:
@@ -132,7 +132,7 @@ function varnzanirnzayah(word)
         dvitv.push(false)
         svrah2=svrah2.concat([3])
         svrah=svrah2
-        for (i=0;i<len(vrnah);i++){
+        for (let i=0;i<len(vrnah);i++){
             if(svrah[i]==0){
                 svrh=0
                 break
@@ -143,11 +143,11 @@ function varnzanirnzayah(word)
                 break
             }
         }
-        for (i=0;i<len(vrnah);i++){
+        for (let i=0;i<len(vrnah);i++){
             svrahL.push(svrh)
             if(svrah[i]!=3){
                 svrh=svrah[i]
-                for (j=i-1;j>-1;j--){
+                for (let j=i-1;j>-1;j--){
                     svrahR[j]=svrah[i]
                     if (svrah[j]!=3)break
                 }
@@ -159,14 +159,14 @@ function varnzanirnzayah(word)
 }
 function str(x){return x.toString()}
 function labeller(d){
-	arr=varnzanirnzayah(d)
+	let arr=varnzanirnzayah(d)
 	//console.log(arr[1])
-	vrnah=arr[0],dvitv=arr[1],svrah=arr[2],svrahL=arr[3],svrahR=arr[4]
+	let vrnah=arr[0],dvitv=arr[1],svrah=arr[2],svrahL=arr[3],svrahR=arr[4]
 	svrah=svrah.map((a)=>{return {0:'A',2:'U',1:'S',3:'V'}[a]})
 	svrahR=svrahR.map((a)=>{return {0:'A',2:'U',1:'S',3:'V'}[a]})
 	svrahL=svrahL.map((a)=>{return {0:'A',2:'U',1:'S',3:'V'}[a]})
-	lab=""
-	mono=""
+	let lab=""
+	let mono=""
 	if(len(vrnah)==0)return lab
 	let krmh=0
 	for(krmh=0;krmh<len(vrnah);krmh++){
@@ -189,8 +189,8 @@ function labeller(d){
 			else lab+='O'
 			lab+='/'
 		}
-		j=13
-		svrsuci=[svrah,svrahL,svrahR]
+		let j=13
+		let svrsuci=[svrah,svrahL,svrahR]
 		//console.log(svrsuci)
 		svrsuci.forEach(pdy=>{
 			lab+=str(j)+':'
@@ -206,14 +206,17 @@ function labeller(d){
 	//console.log(svrah)
 	return [len(vrnah),lab,svrah,svrahL,svrahR]
 }
-convertUint8ArrayToBinaryString =function(u8Array) {
+var convertUint8ArrayToBinaryString =function(u8Array) {
 	var i, len = u8Array.length, b_str = "";
 	for (i=0; i<len; i++) {
 		b_str += String.fromCharCode(u8Array[i]);
 	}
 	return b_str;
 };
+if(typeof window!=="undefined")
 suvagarmbh=function(prtikrm) {
+context=new AudioContext();
+if(typeof(window)=='undefined')return;
 	window.hts_prtikrm=function()
 	{
 		Module.ccall('hts_armbh',null,['string'],['assets/suvak.htsvoice']);
@@ -225,9 +228,9 @@ suvagarmbh=function(prtikrm) {
 	}
 };
 var fp;
-vakstapnm=function(vakym)
+var vakstapnm=function(vakym)
 {
-	arr=labeller(vakym)
+	let arr=labeller(vakym)
 	arr[1]='0 500000 '+arr[1]
 	/*var purvanvh=0
 	var vrnanvh=0;
@@ -290,16 +293,17 @@ vakstapnm=function(vakym)
 		return as
 	},'di')*/
 }
-suvacnm=function(vakym) {
+if(typeof window!=="undefined")
+var suvacnm=function(vakym) {
 	vakstapnm(vakym)
 	Module.ccall('hts_vacnm',null,['string','string','number'],['assets/0.lab','assets/0.wav',fp])
 	//removeFunction(fp)	
 	var snd=new Audio('data:audio/wav;base64,' + btoa(convertUint8ArrayToBinaryString(FS.readFile('assets/0.wav'))))
 	snd.play()
 };
-
-var context=new AudioContext();
+var pro_sbdh=Module.cwrap('pro_sbdh','float',[])
 var time;
+if(typeof window!=="undefined")
 suvacnarmbh=function(vakym,prtikrm)
 {
 	time=Date.now()
@@ -315,8 +319,8 @@ suvacnarmbh=function(vakym,prtikrm)
     var outputData = outputBuffer.getChannelData(channel);
 		
     // Loop through the samples
-    for (var sample = 0; sample < outputBuffer.length; sample++) {
-      let agtih=Module.ccall('pro_sbdh','float',[],[])
+    for (let sample = 0; sample < outputBuffer.length; sample++) {
+      let agtih=pro_sbdh()
       //console.log(agtih)
       if(agtih>2.0)
       {
@@ -333,7 +337,7 @@ suvacnarmbh=function(vakym,prtikrm)
 	}
 	vakstapnm(vakym)
 	console.log(Date.now()-time)
-	Module.ccall('pro_vacnarmbh',null,['string','number'],['assets/0.lab',fp])	
+	Module.ccall('pro_vacnarmbh',null,['string','number'],['assets/0.lab',fp])
 	console.log(Date.now()-time)
 	scriptNode.connect(context.destination)
 }
