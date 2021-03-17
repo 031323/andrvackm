@@ -107,9 +107,10 @@ function varnzanirnzayah(word)
             //console.log('thisis')
             if (['k','g','c','j','T','D','t','d','p','b'].includes(transliterate[varnzaah[i]][0] )&& i>0){
             	if (transliterate[varnzaah[i-1]][0]==transliterate[varnzaah[i]][0]){
+				        console.log(svrah2)
             		vrnah.splice(vrnah.length-2,1)
-            		dvitv.splice(vrnah.length-2,1)
-            		svrah2.splice(vrnah.length-2,1)
+            		dvitv.splice(dvitv.length-2,1)
+            		svrah2.splice(svrah2.length-2,1)
             		//vrnah[-1]=vrnah[-1]+'x2'
             		dvitv[vrnah.length-1]=true
             	}
@@ -121,8 +122,8 @@ function varnzanirnzayah(word)
             if('y r l L v s1 s2 s h N1 N2 N3 n m'.split(' ').includes(vrnah[vrnah.length-1] ) && i>0){
             	if(vrnah[vrnah.length-2]==vrnah[vrnah.length-1]){
             		vrnah.splice(vrnah.length-2,1)
-            		dvitv.splice(vrnah.length-2,1)
-            		svrah2.splice(vrnah.length-2,1)
+            		dvitv.splice(dvitv.length-2,1)
+            		svrah2.splice(svrah2.length-2,1)
             		//vrnah[-1]=vrnah[-1]+'x2'
             		dvitv[vrnah.length-1]=true
             	}
@@ -158,8 +159,10 @@ function varnzanirnzayah(word)
         return [vrnah,dvitv,svrah,svrahL,svrahR]
 }
 function str(x){return x.toString()}
+var vakarr
 function labeller(d){
 	let arr=varnzanirnzayah(d)
+	vakarr=arr
 	//console.log(arr[1])
 	let vrnah=arr[0],dvitv=arr[1],svrah=arr[2],svrahL=arr[3],svrahR=arr[4]
 	svrah=svrah.map((a)=>{return {0:'A',2:'U',1:'S',3:'V'}[a]})
@@ -312,11 +315,9 @@ suvacnarmbh=function(vakym,prtikrm)
 	scriptNode.onaudioprocess = function(audioProcessingEvent) {
 		
   // The output buffer contains the samples that will be modified and played
-  var outputBuffer = audioProcessingEvent.outputBuffer;
+  let outputBuffer = audioProcessingEvent.outputBuffer;
 
-  // Loop through the output channels (in this case there is only one)
-  for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
-    var outputData = outputBuffer.getChannelData(channel);
+  let outputData = outputBuffer.getChannelData(0);
 		
     // Loop through the samples
     for (let sample = 0; sample < outputBuffer.length; sample++) {
@@ -333,7 +334,6 @@ suvacnarmbh=function(vakym,prtikrm)
       }
       else outputData[sample]=agtih
     }
-  }
 	}
 	vakstapnm(vakym)
 	console.log(Date.now()-time)
