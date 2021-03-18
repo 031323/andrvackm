@@ -337,7 +337,7 @@ suvacnarmbh=function(vakym,prtikrm)
 	}
 	vakstapnm(vakym)
 	console.log(Date.now()-time)
-	Module.ccall('pro_vacnarmbh',null,['string','number'],['assets/0.lab',fp])
+	Module.ccall('pro_vacnarmbh','number',['string','number'],['assets/0.lab',fp])
 	console.log(Date.now()-time)
 	scriptNode.connect(context.destination)
 }

@@ -60,7 +60,7 @@ HTS_ENGINE_C_START;
 #include<emscripten.h>
 
 #include "HTS_engine.h"
-
+#include<HTS_vocoder.c>
 #include "HTS_hidden.h"
 
 /* usage: output usage */
@@ -113,6 +113,14 @@ int main()
   		  window.hts_prtikrm()
 			}
 		}
+		else
+			{
+			hts='1';
+			if (typeof hts_prtikrm !== "undefined") { 
+   	 // safe to use the function
+  		  hts_prtikrm()
+			}
+		}
 	});
 	return 0;
 }
@@ -157,7 +165,7 @@ HTS_GStreamSet * gss; HTS_PStreamSet * pss; size_t stage; HTS_Boolean use_log_ga
    size_t nlpf = 0;
    double *lpf = NULL;
    
-void pro_vacnarmbh(char* labfn,double(* svradesh0)(size_t))
+size_t pro_vacnarmbh(char* labfn,double(* svradesh0)(size_t))
 {
 	HTS_Engine_refresh(&engine);
 	HTS_Engine_generate_state_sequence_from_fn(&engine,labfn);
@@ -204,14 +212,38 @@ void pro_vacnarmbh(char* labfn,double(* svradesh0)(size_t))
    HTS_Vocoder_initialize(&v, gss->gstream[0].vector_length - 1, stage, use_log_gain, sampling_rate, fperiod);
    if (gss->nstream >= 3)
       nlpf = gss->gstream[2].vector_length;
+   
+   /*
+   for(i=0;i<gss->total_frame;i++)
+   {
+   		j=i*fperiod;
+   		if (gss->nstream >= 3)
+      lpf = &gss->gstream[2].par[i][0];
+      HTS_Vocoder_synthesize(&v, gss->gstream[0].vector_length - 1, 
+      gss->gstream[1].par[i][0]==LZERO?LZERO:
+      svradesh0(i), 
+      &gss->gstream[0].par[i][0], nlpf, lpf, alpha, beta, volume, &gss->gspeech[j], audio);
+   }
+   */
    i=0;
    j=0;
+   return gss->total_nsample;
 }
 double svradesh0(size_t);
+
+HTS_Vocoder * v2; size_t m; double lf0; double *spectrum; double *rawdata;
+
+   double x;
+   short xs;
+   int rawidx = 0;
+   double p;
+
 float pro_sbdh()
 {
+	//EM_ASM({console.log($0)},j);
 	if(j%fperiod==0)
 	{
+		
 		i=j/fperiod;
 		if(i==gss->total_frame)
 		{
@@ -220,14 +252,112 @@ float pro_sbdh()
       HTS_Audio_flush(audio);
       return 2.34567;
 		}
+		
+		
 			if (gss->nstream >= 3)
       lpf = &gss->gstream[2].par[i][0];
+    /*
       HTS_Vocoder_synthesize(&v, gss->gstream[0].vector_length - 1, 
       gss->gstream[1].par[i][0]==LZERO?LZERO:
       svradesh0(i), 
       &gss->gstream[0].par[i][0], nlpf, lpf, alpha, beta, volume, &gss->gspeech[j], audio);
+    */
+    {
+    	v2=&v; m=gss->gstream[0].vector_length - 1; 
+      lf0=gss->gstream[1].par[i][0]==LZERO?LZERO:svradesh0(i);
+      spectrum=&gss->gstream[0].par[i][0];
+      rawdata=&gss->gspeech[j];
+      rawidx=0;
+      
+    	HTS_Vocoder* v=v2;
+      if(j!=0)
+    	{
+    	   HTS_Vocoder_end_excitation(v, p);
+			   HTS_movem(v->cc, v->c, m + 1);
+			}
+      
+    	int i,j;   	
+    	
+      if (lf0 == LZERO)
+      p = 0.0;
+   else if (lf0 <= MIN_LF0)
+      p = v->rate / MIN_F0;
+   else if (lf0 >= MAX_LF0)
+      p = v->rate / MAX_F0;
+   else
+      p = v->rate / exp(lf0);
+
+   /* first time */
+   if (v->is_first == TRUE) {
+      HTS_Vocoder_initialize_excitation(v, p, nlpf);
+      if (v->stage == 0) {      /* for MCP */
+         HTS_mc2b(spectrum, v->c, m, alpha);
+      } else {                  /* for LSP */
+         HTS_movem(spectrum, v->c, m + 1);
+         HTS_lsp2mgc(v, v->c, v->c, m, alpha);
+         HTS_mc2b(v->c, v->c, m, alpha);
+         HTS_gnorm(v->c, v->c, m, v->gamma);
+         for (i = 1; i <= m; i++)
+            v->c[i] *= v->gamma;
+      }
+      v->is_first = FALSE;
+   }
+
+   HTS_Vocoder_start_excitation(v, p);
+   if (v->stage == 0) {         /* for MCP */
+      HTS_Vocoder_postfilter_mcp(v, spectrum, m, alpha, beta);
+      HTS_mc2b(spectrum, v->cc, m, alpha);
+      for (i = 0; i <= m; i++)
+         v->cinc[i] = (v->cc[i] - v->c[i]) / v->fprd;
+   } else {                     /* for LSP */
+      HTS_Vocoder_postfilter_lsp(v, spectrum, m, alpha, beta);
+      HTS_check_lsp_stability(spectrum, m);
+      HTS_lsp2mgc(v, spectrum, v->cc, m, alpha);
+      HTS_mc2b(v->cc, v->cc, m, alpha);
+      HTS_gnorm(v->cc, v->cc, m, v->gamma);
+      for (i = 1; i <= m; i++)
+         v->cc[i] *= v->gamma;
+      for (i = 0; i <= m; i++)
+         v->cinc[i] = (v->cc[i] - v->c[i]) / v->fprd;
+   }
+   
+    }
+    
 	}
-	double x=gss->gspeech[j];
+	//double x=gss->gspeech[j];
+	
+	{
+		int i;
+		HTS_Vocoder* v=v2;
+		x = HTS_Vocoder_get_excitation(v, lpf);
+      if (v->stage == 0) {      /* for MCP */
+         if (x != 0.0)
+            x *= exp(v->c[0]);
+         x = HTS_mlsadf(x, v->c, m, alpha, PADEORDER, v->d1);
+      } else {                  /* for LSP */
+         if (!NGAIN)
+            x *= v->c[0];
+         x = HTS_mglsadf(x, v->c, m, alpha, v->stage, v->d1);
+      }
+      x *= volume;
+
+      /* output */
+      if (rawdata)
+         rawdata[rawidx++] = x;
+      if (audio) {
+         if (x > 32767.0)
+            xs = 32767;
+         else if (x < -32768.0)
+            xs = -32768;
+         else
+            xs = (short) x;
+         HTS_Audio_write(audio, xs);
+      }
+
+      for (i = 0; i <= m; i++)
+         v->c[i] += v->cinc[i];
+	}
+	
 	j+=1;
 	float temp;
 	if (x > 32767.0)

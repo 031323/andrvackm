@@ -1,4 +1,5 @@
 Module.ccall('hts_armbh',null,['string'],['assets/suvak.htsvoice']);
+var arbdh=false;
 class SuvakProcessor extends AudioWorkletProcessor {
   constructor() {
     super();
@@ -6,20 +7,25 @@ class SuvakProcessor extends AudioWorkletProcessor {
       // Handling data from the node.
       console.log(event.data);
       vakstapnm(event.data);
-			Module.ccall('pro_vacnarmbh',null,['string','number'],['assets/0.lab',fp])
+			Module.ccall('pro_vacnarmbh','number',['string','number'],['assets/0.lab',fp])
+			arbdh=true
+			console.log('arbdh')
+			this.port.postMessage('arbdh')
     };
   }
 
   process(inputs, outputs, parameters) {
+  	if(!arbdh)return true;
   	const output=outputs[0][0];
   	for (let i = 0; i < output.length; ++i)
   	{
   		let agtih=pro_sbdh()
       if(agtih>2.0)
       {
+      	arbdh=false;
       	for(;i<output.length;i++)
 	 		     output[i]=0.0;
- 		    this.port.postMessage(null)
+ 		    this.port.postMessage('smaptih')
  		    return false;
       }
       else output[i]=agtih
@@ -28,5 +34,5 @@ class SuvakProcessor extends AudioWorkletProcessor {
     return true;
   }
 }
-
+console.log('worker 10')
 registerProcessor('suvak-processor', SuvakProcessor);
