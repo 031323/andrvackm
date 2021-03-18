@@ -1,4 +1,4 @@
-var context = new AudioContext();
+var context = new AudioContext({sampleRate:48000,latencyHint:"playback"});
 
 suvagarmbh=function(prtikrm) {
 	context.audioWorklet.addModule('suvakworker.js').then(() => { prtikrm() });
