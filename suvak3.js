@@ -1,11 +1,23 @@
 var context = new AudioContext({sampleRate:48000,latencyHint:"playback"});
 var suvakww;
 suvagarmbh=function(prtikrm) {
-	suvakww=new Worker('suvakww.js');
-	suvakww.onmessage=function(e)
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', 'https://031323.github.io/suvakww.js');
+	xhr.onload = function() {
+    if (xhr.status === 200) {
+        var workerSrcBlob, workerBlobURL;
+        
+            workerSrcBlob = new Blob([xhr.responseText], { type: 'text/javascript' });
+            workerBlobURL = window.URL.createObjectURL(workerSrcBlob);
+							suvakww=new Worker(workerBlobURL);
+		suvakww.onmessage=function(e)
 	{
 		if(e.data=='suvagsmi')prtikrm();
 	}
+    }
+};
+xhr.send();
+
 }
 var samples;
 var sample_l;
