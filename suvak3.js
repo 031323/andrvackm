@@ -13,6 +13,7 @@ suvagarmbh=function(prtikrm) {
 		suvakww.onmessage=function(e)
 	{
 		if(e.data=='suvagsmi')prtikrm();
+		else if(e.data=='reload')setTimeout(function(){location.reload()},5000);
 	}
     }
 };
