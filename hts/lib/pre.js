@@ -245,9 +245,9 @@ var vakstapnm=function(vakym)
 	*/
 	FS.writeFile('assets/0.lab',arr[1])
 	Module.ccall('svrstapnm',null,['number','string','string','string'],[arr[0],
-		arr[2].toString().replaceAll(',',''),
-		arr[3].toString().replaceAll(',',''),
-		arr[4].toString().replaceAll(',','')])
+		arr[2].toString().replace(/,/g,''),
+		arr[3].toString().replace(/,/g,''),
+		arr[4].toString().replace(/,/g,'')])
 	fp=Module.ccall('svradesadesh','number',[],[])
 	/*addFunction(function (f){
 		//console.log(f)
