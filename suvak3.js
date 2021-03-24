@@ -2,7 +2,7 @@ var context = new AudioContext({sampleRate:48000,latencyHint:"playback"});
 var suvakww;
 suvagarmbh=function(prtikrm) {
 	var xhr = new XMLHttpRequest();
-	xhr.open('GET', 'https://031323.github.io/suvakww.js');
+	xhr.open('GET', 'https://031323.github.io/suvak/suvakww.js');
 	xhr.onload = function() {
     if (xhr.status === 200) {
         var workerSrcBlob, workerBlobURL;
