@@ -1,5 +1,10 @@
 var context = new AudioContext({sampleRate:48000,latencyHint:"playback"});
 var suvakww;
+function reload()
+{
+	console.log('reload')
+	setTimeout(function(){location.reload()},5000)
+}
 suvagarmbh=function(prtikrm) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', 'https://031323.github.io/suvak/suvakww.js');
@@ -11,12 +16,14 @@ suvagarmbh=function(prtikrm) {
             workerBlobURL = window.URL.createObjectURL(workerSrcBlob);
 							suvakww=new Worker(workerBlobURL);
 		suvakww.onmessage=function(e)
-	{
-		if(e.data=='suvagsmi')prtikrm();
-		else if(e.data=='reload')setTimeout(function(){location.reload()},5000);
-	}
+		{
+			if(e.data=='suvagsmi')prtikrm();
+			else if(e.data=='reload')reload();
+		}
     }
+		else reload();
 };
+xhr.onerror=reload;
 xhr.send();
 
 }
