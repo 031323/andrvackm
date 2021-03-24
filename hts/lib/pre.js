@@ -163,7 +163,7 @@ var vakarr
 function labeller(d){
 	let arr=varnzanirnzayah(d)
 	vakarr=arr
-	//console.log(arr[1])
+	console.log(arr[1])
 	let vrnah=arr[0],dvitv=arr[1],svrah=arr[2],svrahL=arr[3],svrahR=arr[4]
 	svrah=svrah.map((a)=>{return {0:'A',2:'U',1:'S',3:'V'}[a]})
 	svrahR=svrahR.map((a)=>{return {0:'A',2:'U',1:'S',3:'V'}[a]})
