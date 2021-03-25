@@ -7,6 +7,7 @@ function reload()
 }
 suvagarmbh=function(prtikrm) {
 	var xhr = new XMLHttpRequest();
+	//xhr.open('GET', 'http://0.0.0.0:8000/suvakww.js');
 	//xhr.open('GET', 'http://192.168.43.44:8000/suvakww.js');
 	xhr.open('GET', 'https://031323.github.io/suvak/suvakww.js');
 	xhr.onload = function() {
