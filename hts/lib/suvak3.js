@@ -1,15 +1,10 @@
 var context = new AudioContext({sampleRate:48000,latencyHint:"playback"});
 var suvakww;
-function reload()
-{
-	console.log('reload')
-	setTimeout(function(){location.reload()},5000)
-}
-suvagarmbh=function(prtikrm) {
+suvagarmbh=function(prtikrm,reload) {
 	var xhr = new XMLHttpRequest();
 	//xhr.open('GET', 'http://0.0.0.0:8000/suvakww.js');
-	//xhr.open('GET', 'http://192.168.43.44:8000/suvakww.js');
-	xhr.open('GET', 'https://031323.github.io/suvak/suvakww.js');
+	xhr.open('GET', 'http://192.168.43.44:8000/suvakww.js');
+	//xhr.open('GET', 'https://031323.github.io/suvak/suvakww.js');
 	xhr.onload = function() {
     if (xhr.status === 200) {
         var workerSrcBlob, workerBlobURL;
