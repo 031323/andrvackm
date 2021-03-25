@@ -7,10 +7,11 @@ onmessage=(event) => {
 			postMessage(['arbdh',ns])
 			let samples=new Float32Array(ns);
 			const s=4096;
-			for(let i=0;i<ns;i+=s)
+			let i=0,j=0;
+			for(i=0;i<ns;i+=s)
 			{
 				let ui=Math.min(i+s,ns);
-				for(let j=i;j<ui;j++)
+				for(j=i;j<ui;j++)
 					samples[j]=pro_sbdh();
 				postMessage(samples.subarray(i,ui));
 			}
