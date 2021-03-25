@@ -7,6 +7,7 @@ function reload()
 }
 suvagarmbh=function(prtikrm) {
 	var xhr = new XMLHttpRequest();
+	//xhr.open('GET', 'http://192.168.43.44:8000/suvakww.js');
 	xhr.open('GET', 'https://031323.github.io/suvak/suvakww.js');
 	xhr.onload = function() {
     if (xhr.status === 200) {
@@ -60,8 +61,9 @@ suvacnarmbh=function(vakym,prtikrm)
 		}
     else
     {
-    	for(let i=0;i<event.data.length;i++)
-    		samples[sample_u+i]=event.data[i];
+    	//for(let i=0;i<event.data.length;i++)
+    	//	samples[sample_u+i]=event.data[i];
+    	samples.set(event.data,sample_u);
     	sample_u+=event.data.length;
     }
   };
