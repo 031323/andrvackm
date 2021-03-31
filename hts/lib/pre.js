@@ -305,6 +305,7 @@ var suvacnm=function(vakym) {
 	snd.play()
 };
 var pro_sbdh=Module.cwrap('pro_sbdh','float',[])
+var pro_sbdah=Module.cwrap('pro_sbdah',null,[])
 var time;
 if(typeof window!=="undefined")
 suvacnarmbh=function(vakym,prtikrm)
