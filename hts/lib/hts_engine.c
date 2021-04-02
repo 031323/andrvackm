@@ -369,6 +369,11 @@ float pro_sbdh()
   return temp;
 }
 
+void pro_sbdah()
+{
+	for(int i=0;i<240;i++)pro_sbdh();
+}
+
 int main__(int argc, char **argv)
 {
    int i;
