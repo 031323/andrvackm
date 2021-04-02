@@ -84,6 +84,7 @@ function varnzanirnzayah(word)
         let vrnah=['sil']
         let dvitv=[false]
         let svrah2=[3]
+        // vynjn:3 udatth:2 anudatth:0 svrith:1
         for(let i=0;i<len(varnzaah);i++){
             //if varnzaah[i]=="ऐ":vrnah+=['a','i']
             //else if varnzaah[i]=="औ":vrnah+=['a','u']
