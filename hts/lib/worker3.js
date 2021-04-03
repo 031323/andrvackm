@@ -23,7 +23,7 @@ onmessage=(event) => {
     };
 var hts_prtikrm=function()
 {
-	Module.ccall('hts_armbh',null,['string'],['assets/suvak.htsvoice']);
+	Module.ccall('hts_armbh',null,['string'],[htsfile]);
 	postMessage('suvagsmi');
 }
 if(typeof hts!=='undefined')

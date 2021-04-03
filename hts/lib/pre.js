@@ -3,13 +3,17 @@ var transliterate={
         }
 function len(x)
 {return x.length}
+const htsfile='assets/suvak.htsvoice';
 function varnzanirnzayah(word)
 {
         let s=word
         //shabdah=[]
         //for i in s:
         //    shabdah.push(i.encode('utf-8'))
-        let shabdah=word
+        if(htsfile==='assets/suvak.htsvoice')word=word.replace('ज्ज','त्ज');
+        word=word.replace('१॒॑','१॒॑');
+        word=word.replace('३॒॑','३॒॑');
+        let shabdah=word;
         let varnzaah=[]
         let svrah=[]
         let svrahL=[]
@@ -61,6 +65,7 @@ function varnzanirnzayah(word)
                 	if('अआइईउऊऋॠऌॡएऐओऔ'.includes(varnzaah[j] )){
                 		svrah[j]=0;break;
                 		}
+                	if('१३'.includes(varnzaah[j]))break;
                 	}
                 }
             else if(shabdah[i]=='॑'){
@@ -223,7 +228,7 @@ context=new AudioContext();
 if(typeof(window)=='undefined')return;
 	window.hts_prtikrm=function()
 	{
-		Module.ccall('hts_armbh',null,['string'],['assets/suvak.htsvoice']);
+		Module.ccall('hts_armbh',null,['string'],[htsfile]);
 		prtikrm()
 	}
 	if(window.hts==='1')

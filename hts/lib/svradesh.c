@@ -63,7 +63,20 @@ double svradesh0(size_t f){
 			if(vrnkrmh>0)
 			{
 				if(svrah[vrnkrmh-1]=='A'||svrah[vrnkrmh-1]=='S')
+				{
 					p1=as;
+					if(vrnkrmh<vrnsnkya-1)
+					{
+						if(svrah[vrnkrmh+1]=='V')p2=as;
+					}
+				}
+				if(svrah[vrnkrmh-1]=='V')
+				{
+					if(vrnkrmh>1)
+					{
+						if(svrah[vrnkrmh-2]=='A'||svrah[vrnkrmh-1]=='S')p1=as;
+					}
+				}
 			}
 			if(vrnkrmh<vrnsnkya-1)
 			{

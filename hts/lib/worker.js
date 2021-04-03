@@ -1,4 +1,4 @@
-Module.ccall('hts_armbh',null,['string'],['assets/suvak.htsvoice']);
+Module.ccall('hts_armbh',null,['string'],[htsfile]);
 var arbdh=false;
 class SuvakProcessor extends AudioWorkletProcessor {
   constructor() {
