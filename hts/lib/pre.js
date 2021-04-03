@@ -11,9 +11,10 @@ function varnzanirnzayah(word)
         //for i in s:
         //    shabdah.push(i.encode('utf-8'))
         if(htsfile==='assets/suvak.htsvoice')word=word.replace('ज्ज','त्ज');
-        word=word.replace('१॒॑','१॒॑');
-        word=word.replace('३॒॑','३॒॑');
+        word=word.replace('१'+'॒'+'॑','१'+'॑'+'॒');
+        word=word.replace('३'+'॒'+'॑','१'+'॑'+'॒');
         let shabdah=word;
+        console.log(shabdah);
         let varnzaah=[]
         let svrah=[]
         let svrahL=[]
@@ -61,11 +62,13 @@ function varnzanirnzayah(word)
             else if(shabdah[i]=='॒'){
             	//console.log('c4')
                 svrh=2
+                let pg=true;
+                if(i>0)if(shabdah[i-1]=='॑')pg=false;
+                if(pg)
                 for (let j =len(varnzaah)-1;j>-1;j--){
                 	if('अआइईउऊऋॠऌॡएऐओऔ'.includes(varnzaah[j] )){
                 		svrah[j]=0;break;
                 		}
-                	if('१३'.includes(varnzaah[j]))break;
                 	}
                 }
             else if(shabdah[i]=='॑'){
@@ -79,7 +82,8 @@ function varnzanirnzayah(word)
             		}
         //console.log(varnzaah) 
         }
-        console.log(varnzaah) 
+        console.log(varnzaah)
+        console.log(svrah);
         let u=false
         for (let i=0;i<len(svrah);i++){
         	if (svrah[i]==0)u=false
@@ -169,7 +173,7 @@ var vakarr
 function labeller(d){
 	let arr=varnzanirnzayah(d)
 	vakarr=arr
-	console.log(arr[1])
+	//console.log(arr[1])
 	let vrnah=arr[0],dvitv=arr[1],svrah=arr[2],svrahL=arr[3],svrahR=arr[4]
 	svrah=svrah.map((a)=>{return {0:'A',2:'U',1:'S',3:'V'}[a]})
 	svrahR=svrahR.map((a)=>{return {0:'A',2:'U',1:'S',3:'V'}[a]})
