@@ -1,3 +1,4 @@
+var hts;
 Module.ccall('hts_armbh',null,['string'],[htsfile]);
 var arbdh=false;
 class SuvakProcessor extends AudioWorkletProcessor {
