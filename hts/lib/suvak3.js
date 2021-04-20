@@ -3,7 +3,7 @@ var suvakww;
 
 var website;
 if(location.href.includes('localhost'))
-	website='https://'+location.host+'/';
+	website='http://'+location.host+'/';
 else
 	website='https://031323.github.io/suvak/';
 	
