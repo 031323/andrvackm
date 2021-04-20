@@ -1,8 +1,12 @@
 var context = new AudioContext({sampleRate:48000,latencyHint:"interactive"});
 var suvakww;
-var website='https://031323.github.io/suvak/';
-if(location.href.includes('localhost:8000'))
-	website='http://localhost:8000/'
+
+var website;
+if(location.href.includes('localhost'))
+	website='http://'+location.host+'/';
+else
+	website='https://031323.github.io/suvak/';
+	
 suvagarmbh=function(prtikrm,reload) {
 	var xhr = new XMLHttpRequest();
 	//xhr.open('GET', 'http://0.0.0.0:8000/suvakww.js');
