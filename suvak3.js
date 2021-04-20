@@ -1,4 +1,4 @@
-var context = new AudioContext({sampleRate:48000,latencyHint:"playback"});
+var context = new AudioContext({sampleRate:48000,latencyHint:"interactive"});
 var suvakww;
 var website='https://031323.github.io/suvak/';
 if(location.href.includes('localhost:8000'))
@@ -60,6 +60,7 @@ suvacnarmbh=function(vakym,prtikrm)
 	
 	var scriptNode = context.createScriptProcessor(4096, 1, 1);
 	scriptNode.onaudioprocess = function(audioProcessingEvent) {
+		//if(sample_u<sample_n){console.log('1');return;}
 	  // The output buffer contains the samples that will be modified and played
   	let outputBuffer = audioProcessingEvent.outputBuffer;
   	let ws=Math.min(sample_l+audioProcessingEvent.target.bufferSize,sample_u)
