@@ -25,10 +25,10 @@ xhr.onerror=reload;
 xhr.send();
 }
 
-suvagarmbh=function(prtikrm,reload) {
+/*suvagarmbh=function(prtikrm,reload) {
 	
 	context.audioWorklet.addModule('suvakworker.js').then(() => { prtikrm() });
-}
+}*/
 
 
 suvacnarmbh=function(vakym,prtikrm)
