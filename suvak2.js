@@ -1,7 +1,7 @@
 var context = new AudioContext({sampleRate:48000,latencyHint:"playback"});
 
 var website;
-if(location.href.includes('localhost'))
+if(location.href.includes('localhost')&&!location.href.includes('localhost:8123'))
 	website='http://'+location.host+'/';
 else
 	website='https://031323.github.io/suvak/';
