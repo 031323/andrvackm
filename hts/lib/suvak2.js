@@ -1,11 +1,13 @@
 var context = new AudioContext({sampleRate:48000,latencyHint:"playback"});
 
 var website;
+console.log('suvak2.js -> '+location.href);
 if(location.href.includes('localhost')&&!location.href.includes('localhost:8123'))
-	website='http://'+location.host+'/';
+	//website='http://'+location.host+'/';
+	website=location.origin+'/';
 else
 	website='https://031323.github.io/suvak/';
-
+var suvak_reload;
 suvagarmbh=function(prtikrm,reload) {
 	var xhr = new XMLHttpRequest();
 	//xhr.open('GET', 'http://0.0.0.0:8000/suvakww.js');
@@ -17,7 +19,8 @@ suvagarmbh=function(prtikrm,reload) {
         
             workerSrcBlob = new Blob([xhr.responseText], { type: 'text/javascript' });
             workerBlobURL = window.URL.createObjectURL(workerSrcBlob);
-		context.audioWorklet.addModule(workerBlobURL).then(() => { prtikrm() });
+						context.audioWorklet.addModule(workerBlobURL).then(() => { prtikrm() });
+						suvak_reload=reload;
     }
 		else reload();
 };
@@ -41,7 +44,9 @@ suvacnarmbh=function(vakym,prtikrm)
 		if(event.data=='arbdh')
 			node.connect(context.destination);
 		if(event.data=='smaptih')
-    	prtikrm()
+    	prtikrm();
+		if(event.data=='reload')
+    	suvak_reload();
   };
   node.port.postMessage(vakym);
   

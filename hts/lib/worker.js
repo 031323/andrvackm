@@ -1,9 +1,11 @@
 var hts;
 Module.ccall('hts_armbh',null,['string'],[htsfile]);
 var arbdh=false;
+var suvakprocessor;
 class SuvakProcessor extends AudioWorkletProcessor {
   constructor() {
     super();
+    suvakprocessor=this;
     this.port.onmessage = (event) => {
       // Handling data from the node.
       console.log(event.data);
