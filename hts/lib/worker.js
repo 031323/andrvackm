@@ -9,8 +9,14 @@ class SuvakProcessor extends AudioWorkletProcessor {
     this.port.onmessage = (event) => {
       // Handling data from the node.
       console.log(event.data);
+      let t0=Date.now();
       vakstapnm(event.data);
+      let t1=Date.now();
+      console.log('vakstapnm: '+(t1-t0).toString());
+      t0=t1;
 			Module.ccall('pro_vacnarmbh','number',['string','number'],['assets/0.lab',fp])
+			t1=Date.now();
+      console.log('pro_vacnarmbh: '+(t1-t0).toString());
 			arbdh=true
 			console.log('arbdh')
 			this.port.postMessage('arbdh')
