@@ -8,7 +8,10 @@ if(location.href.includes('localhost')&&!location.href.includes('localhost:8123'
 else
 	website='https://031323.github.io/suvak/';
 var suvak_reload;
+var suvagarbdih=false;
 suvagarmbh=function(prtikrm,reload) {
+	if(suvagarbdih)return;
+	else suvagarbdih=true;
 	var xhr = new XMLHttpRequest();
 	//xhr.open('GET', 'http://0.0.0.0:8000/suvakww.js');
 	//xhr.open('GET', 'http://localhost:8080/suvakww.js');
@@ -33,9 +36,11 @@ xhr.send();
 	context.audioWorklet.addModule('suvakworker.js').then(() => { prtikrm() });
 }*/
 
-
+var suvacnm=false;
 suvacnarmbh=function(vakym,prtikrm)
 {
+	if(suvacnm)return;
+	suvacnm=true;
 	context.resume();
 	let node = new AudioWorkletNode(context, 'suvak-processor');
 	node.port.onmessage = (event) => {
@@ -44,11 +49,15 @@ suvacnarmbh=function(vakym,prtikrm)
 		if(event.data=='arbdh')
 			node.connect(context.destination);
 		if(event.data=='smaptih')
+		{
+			suvacnm=false;
     	prtikrm();
+    }
 		if(event.data=='reload')
+		{
+			suvacnm=false;
     	suvak_reload();
+    }
   };
   node.port.postMessage(vakym);
-  
-	
 }
