@@ -14,12 +14,12 @@ class SuvakProcessor extends AudioWorkletProcessor {
       let t1=Date.now();
       console.log('vakstapnm: '+(t1-t0).toString());
       t0=t1;
-			Module.ccall('pro_vacnarmbh','number',['string','number'],['assets/0.lab',fp])
+			let ns=Module.ccall('pro_vacnarmbh','number',['string','number'],['assets/0.lab',fp])
 			t1=Date.now();
       console.log('pro_vacnarmbh: '+(t1-t0).toString());
 			arbdh=true
 			console.log('arbdh')
-			this.port.postMessage('arbdh')
+			this.port.postMessage(['arbdh',ns])
     };
   }
 
