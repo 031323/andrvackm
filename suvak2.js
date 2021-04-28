@@ -2,7 +2,7 @@ var context = new AudioContext({sampleRate:48000,latencyHint:"playback"});
 
 var website;
 console.log('suvak2.js -> '+location.href);
-if(location.href.includes('localhost')&&!location.href.includes('localhost:8123'))
+if(location.href.includes('localhost'))
 	//website='http://'+location.host+'/';
 	website=location.origin+'/';
 else
@@ -12,13 +12,13 @@ var suvagarbdih=false;
 suvagarmbh=function(prtikrm,reload) {
 	if(suvagarbdih)return;
 	else suvagarbdih=true;
-	var xhr = new XMLHttpRequest();
+	let xhr = new XMLHttpRequest();
 	//xhr.open('GET', 'http://0.0.0.0:8000/suvakww.js');
 	//xhr.open('GET', 'http://localhost:8080/suvakww.js');
 	xhr.open('GET', website+'suvakworker.js');
 	xhr.onload = function() {
     if (xhr.status === 200) {
-        var workerSrcBlob, workerBlobURL;
+        let workerSrcBlob, workerBlobURL;
         
             workerSrcBlob = new Blob([xhr.responseText], { type: 'text/javascript' });
             workerBlobURL = window.URL.createObjectURL(workerSrcBlob);
@@ -37,7 +37,7 @@ xhr.send();
 }*/
 
 var suvacnm=false;
-suvacnarmbh=function(vakym,prtikrm)
+suvacnarmbh=function(vakym,armbkrm,prtikrm)
 {
 	if(suvacnm)return;
 	suvacnm=true;
@@ -46,8 +46,11 @@ suvacnarmbh=function(vakym,prtikrm)
 	node.port.onmessage = (event) => {
 		console.log('message')
 		console.log(event)
-		if(event.data=='arbdh')
+		if(event.data[0]=='arbdh')
+		{
+			armbkrm(event.data[1]/48000);
 			node.connect(context.destination);
+		}
 		if(event.data=='smaptih')
 		{
 			suvacnm=false;
