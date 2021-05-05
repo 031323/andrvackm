@@ -59,7 +59,8 @@ double svradesh0(size_t f){
 		else if(svrah[vrnkrmh]=='V')
 		{
 			int dlh=0;
-			if(dvitv[vrnkrmh])dlh=(f-purvanvh)*2>vrnanvh;
+			double bedh=0.9;
+			if(dvitv[vrnkrmh])dlh=(double)(f-purvanvh)>(double)vrnanvh*bedh;
 			double p1,p2;
 			p1=svrahL[vrnkrmh]=='U'||svrahR[vrnkrmh]!='A'?us:as;
 			p2=p1;
@@ -98,8 +99,8 @@ double svradesh0(size_t f){
 			if(p1!=p2)
 			{
 				if(!dvitv[vrnkrmh])return p1+(p2-p1)*(double)(f-purvanvh)/(double)vrnanvh;
-				else if(!dlh)return p1+(p2-p1)*(double)(f-purvanvh)*2.0/(double)vrnanvh;
-				else return p1+(p2-p1)*((double)(f-purvanvh)*2.0/(double)vrnanvh-1.0);
+				else if(!dlh)return p1+(p2-p1)*(double)(f-purvanvh)/(double)vrnanvh/bedh;
+				else return p1+(p2-p1)*((double)(f-purvanvh)/(double)vrnanvh/bedh-1.0);
 			}
 			else return p1;
 		}
