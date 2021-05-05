@@ -50,16 +50,23 @@ var ahrnm=false;
 var samples2=new Float32Array();
 function download()
 {
+			/*
 			let output=new Uint8Array(samples2.buffer)
 			blob=new Blob([output], {type: 'application/octet-binary'});
-			url = window.URL.createObjectURL(blob);
+			*/
+			let wav=new synth.WAV(1, context.sampleRate, 16, true, samples2);
+			let blob=wav.toBlob();
+			let url = window.URL.createObjectURL(blob);
         a.href = url;
-        a.download = 'float32-48k';
+        a.download = 'download';
         a.click();
         window.URL.revokeObjectURL(url);
+      samples2=new Float32Array();
 }
 suvacnarmbh=function(vakym,prtikrm)
 {
+	if(!ahrnm)
+	{
 	context.resume();
 	
 	var scriptNode = context.createScriptProcessor(4096, 1, 1);
@@ -76,7 +83,7 @@ suvacnarmbh=function(vakym,prtikrm)
     	prtikrm()
     }
 	}
-	
+	}
 	suvakww.onmessage = (event) => {
 		if(event.data[0]=='arbdh')
 		{
@@ -84,7 +91,7 @@ suvacnarmbh=function(vakym,prtikrm)
 			samples=new Float32Array(sample_n);
 			sample_l=0;
 			sample_u=0;
-			scriptNode.connect(context.destination);
+			if(!ahrnm)scriptNode.connect(context.destination);
 		}
     else
     {
@@ -98,7 +105,6 @@ suvacnarmbh=function(vakym,prtikrm)
 				samples3.set(samples2);
 				samples3.set(samples,samples2.length);
 				samples2=samples3;
-				scriptNode.disconnect(context.destination)
 	    	prtikrm()
 			}
 			
