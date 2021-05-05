@@ -9,8 +9,8 @@ int gnnm=0;
 size_t vrnanth[VRNSIMA];
 double anukalh;
 size_t vrnsnkya;
-char svrah[VRNSIMA],svrahL[VRNSIMA],svrahR[VRNSIMA];
-void svrstapnm(size_t vrnsnkya0,char *svrah0,char *svrahL0,char *svrahR0)
+char svrah[VRNSIMA],svrahL[VRNSIMA],svrahR[VRNSIMA],dvitv[VRNSIMA];
+void svrstapnm(size_t vrnsnkya0,char *svrah0,char *svrahL0,char *svrahR0,char *dvitv0)
 {
 	purvanvh=0;
 	vrnanvh=0;
@@ -21,6 +21,7 @@ void svrstapnm(size_t vrnsnkya0,char *svrah0,char *svrahL0,char *svrahR0)
 	memcpy(svrah,svrah0,vrnsnkya);
 	memcpy(svrahL,svrahL0,vrnsnkya);
 	memcpy(svrahR,svrahR0,vrnsnkya);
+	memcpy(dvitv,dvitv0,vrnsnkya);
 }	
 double svradesh0(size_t f){
 		if(!gnnm)
@@ -57,30 +58,36 @@ double svradesh0(size_t f){
 		}
 		else if(svrah[vrnkrmh]=='V')
 		{
+			int dlh=0;
+			if(dvitv[vrnkrmh])dlh=(f-purvanvh)*2>vrnanvh;
 			double p1,p2;
 			p1=svrahL[vrnkrmh]=='U'||svrahR[vrnkrmh]!='A'?us:as;
 			p2=p1;
 			if(vrnkrmh>0)
 			{
-				if(svrah[vrnkrmh-1]=='A'||svrah[vrnkrmh-1]=='S')
+				if((svrah[vrnkrmh-1]=='A'||svrah[vrnkrmh-1]=='S')&&!dlh)
 				{
 					p1=as;
 					if(vrnkrmh<vrnsnkya-1)
 					{
-						if(svrah[vrnkrmh+1]=='V')p2=as;
+						if(svrah[vrnkrmh+1]=='V'||dvitv[vrnkrmh])p2=as;
 					}
 				}
-				if(svrah[vrnkrmh-1]=='V')
+				if(svrah[vrnkrmh-1]=='V'||dlh)
 				{
-					if(vrnkrmh>1)
+					if(vrnkrmh>1&&!dlh)
 					{
-						if(svrah[vrnkrmh-2]=='A'||svrah[vrnkrmh-1]=='S')p1=as;
+						if(svrah[vrnkrmh-2]=='A'||svrah[vrnkrmh-2]=='S')p1=as;
+					}
+					if(dlh)
+					{
+						if(svrah[vrnkrmh-1]=='A'||svrah[vrnkrmh-1]=='S')p1=as;
 					}
 				}
 			}
 			if(vrnkrmh<vrnsnkya-1)
 			{
-				if(svrah[vrnkrmh+1]=='A')
+				if(svrah[vrnkrmh+1]=='A'&&(!dvitv[vrnkrmh]||dlh))
 					p2=as;
 			}
 			/*
@@ -88,7 +95,12 @@ double svradesh0(size_t f){
 			double p1=p2;
 			if(vrnkrmh>0)if(svrah[vrnkrmh-1]!='V')
 				p1=svrahL[vrnkrmh]=='U'?us:as;*/
-			if(p1!=p2)return p1+(p2-p1)*(double)(f-purvanvh)/(double)vrnanvh;
+			if(p1!=p2)
+			{
+				if(!dvitv[vrnkrmh])return p1+(p2-p1)*(double)(f-purvanvh)/(double)vrnanvh;
+				else if(!dlh)return p1+(p2-p1)*(double)(f-purvanvh)*2.0/(double)vrnanvh;
+				else return p1+(p2-p1)*((double)(f-purvanvh)*2.0/(double)vrnanvh-1.0);
+			}
 			else return p1;
 		}
 		return as;

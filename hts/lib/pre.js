@@ -178,6 +178,7 @@ function labeller(d){
 	svrah=svrah.map((a)=>{return {0:'A',2:'U',1:'S',3:'V'}[a]})
 	svrahR=svrahR.map((a)=>{return {0:'A',2:'U',1:'S',3:'V'}[a]})
 	svrahL=svrahL.map((a)=>{return {0:'A',2:'U',1:'S',3:'V'}[a]})
+	dvitv=dvitv.map((a)=>{return {false:'O',true:'X'}[a]})
 	let lab=""
 	let mono=""
 	if(len(vrnah)==0)return lab
@@ -198,7 +199,7 @@ function labeller(d){
 		for( upkrmh=krmh-2;upkrmh<krmh+3;upkrmh++){
 			lab+=str(upkrmh-krmh+2+5)+':'
 			if(upkrmh>=0 && upkrmh<len(vrnah))
-				lab+=dvitv[upkrmh]?'X':'O'
+				lab+=dvitv[upkrmh]
 			else lab+='O'
 			lab+='/'
 		}
@@ -217,7 +218,7 @@ function labeller(d){
 	}
 	//console.log(vrnah)
 	//console.log(svrah)
-	return [len(vrnah),lab,svrah,svrahL,svrahR]
+	return [len(vrnah),lab,svrah,svrahL,svrahR,dvitv]
 }
 var convertUint8ArrayToBinaryString =function(u8Array) {
 	var i, len = u8Array.length, b_str = "";
@@ -254,10 +255,12 @@ var vakstapnm=function(vakym)
 	var f0_=0
 	*/
 	FS.writeFile('assets/0.lab',arr[1])
-	Module.ccall('svrstapnm',null,['number','string','string','string'],[arr[0],
+	Module.ccall('svrstapnm',null,['number','string','string','string','string'],[arr[0],
 		arr[2].toString().replace(/,/g,''),
 		arr[3].toString().replace(/,/g,''),
-		arr[4].toString().replace(/,/g,'')])
+		arr[4].toString().replace(/,/g,''),
+		arr[5].toString().replace(/,/g,'')
+		])
 	fp=Module.ccall('svradesadesh','number',[],[])
 	/*addFunction(function (f){
 		//console.log(f)
