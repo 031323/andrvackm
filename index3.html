@@ -95,6 +95,7 @@
 <textarea id="texttospeak" style="display:none">नम॑स्ते। किमप्यत्र॑लिख्यताम्। </textarea>
 <br>
 <button style='display:none' id="play">?</button>
+<button style='display:none' id="download">⬇️</button>
 <!--
 <svg  id="nodnm" style="margin:0;display:none;width:15em;max-width:90vw;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100">
 -->
@@ -109,22 +110,27 @@
 	<div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 </div>
 </div></div>
+<script src="https://unpkg.com/synth-js/dst/synth.min.js"></script>
 <script src="suvak3.js"></script>
 <script>
 var vakyani=[]
 var vakykrmh=0
+function kriya(ahrtih)
+{
+	if(ahrtih)ahrnm=true;
+	adym();
+	vakyani=document.getElementById('texttospeak').value.split(/[।॥,\.]+/)
+	vakykrmh=0
+	krmnm()
+}
 suvagarmbh(function(){
 setTimeout(function(){
 	document.getElementById('prtiksnm').style.display='none';
 	document.getElementById('texttospeak').style.display='';
 	document.getElementById('play').style.display='';
-	document.getElementById('play').onclick=function()
-		{
-			adym();
-			vakyani=document.getElementById('texttospeak').value.split(/[।॥,\.]+/)
-			vakykrmh=0
-			krmnm()
-		}
+	document.getElementById('download').style.display='';
+	document.getElementById('play').onclick=()=>kriya(false);
+	document.getElementById('download').onclick=()=>kriya(true);
 	}
 	,100);
 },
@@ -150,11 +156,15 @@ function krmnm()
 function adym()
 {
 	document.getElementById('play').disabled=true;
+	document.getElementById('download').disabled=true;
 }
 function antym()
 {
 	console.log('antym')
 	document.getElementById('play').disabled=false;
+	document.getElementById('download').disabled=false;
+	if(ahrnm)download();
+	ahrnm=false;
 }
 </script>
 </body>
