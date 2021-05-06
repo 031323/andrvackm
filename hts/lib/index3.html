@@ -96,6 +96,7 @@
 <br>
 <button style='display:none' id="play">?</button>
 <button style='display:none' id="download">⬇️</button>
+<div id="krmdrsnm" style="color:white"></div>
 <!--
 <svg  id="nodnm" style="margin:0;display:none;width:15em;max-width:90vw;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100">
 -->
@@ -143,6 +144,7 @@ function()
 function krmnm()
 {
 	console.log('vakykrmh'+vakykrmh.toString())
+	krmdrsnm.innerHTML=vakykrmh.toString()+'/'+vakyani.length.toString();
 	if(vakykrmh<vakyani.length)
 	{
 		suvacnarmbh(vakyani[vakykrmh],krmnm);
