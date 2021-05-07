@@ -1,3 +1,5 @@
+const suvaggaurvm=4787873;
+
 var context = new AudioContext({sampleRate:48000,latencyHint:"playback"});
 
 var website;
@@ -9,13 +11,16 @@ else
 	website='https://031323.github.io/suvak/';
 var suvak_reload;
 var suvagarbdih=false;
-suvagarmbh=function(prtikrm,reload) {
+
+suvagarmbh=function(prtikrm,reload,progress) {
 	if(suvagarbdih)return;
 	else suvagarbdih=true;
 	let xhr = new XMLHttpRequest();
+	console.log('xhr');
 	//xhr.open('GET', 'http://0.0.0.0:8000/suvakww.js');
 	//xhr.open('GET', 'http://localhost:8080/suvakww.js');
 	xhr.open('GET', website+'suvakworker.js');
+	xhr.onprogress=(e)=>{if(typeof(progress)!='undefined')progress(e.loaded);console.log(e.loaded);};
 	xhr.onload = function() {
     if (xhr.status === 200) {
         let workerSrcBlob, workerBlobURL;
