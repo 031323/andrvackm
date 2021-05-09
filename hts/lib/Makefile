@@ -9,7 +9,7 @@ suvakworker.js:HTS_audio.c HTS_engine.c HTS_label.c HTS_model.c HTS_sstream.c ht
 	sed -i -e 's/else{throw new Error(xhr/else{abort("network1");throw new Error(xhr/g' suvakworker.js && \
 	sed -i -e 's/xhr.onerror=function(event){/xhr.onerror=function(event){abort("network2");/g' suvakworker.js && \
 	sed -i -e 's/xhr.status===304))throw new Error(\"Couldn'\''t load \"+url+\". Status: \"+xhr.status);/xhr.status===304)){abort("network3");throw new Error("couldnot load");}/g' suvakworker.js && \
-	sed -i "1s/.*/const suvaggaurvm=$(stat -c%s suvakworker.js);/" suvak2.js 
+	sed -i "1s/.*/var suvaggaurvm=$(stat -c%s suvakworker.js);/" suvak2.js 
 	
 suvakww.js:HTS_audio.c HTS_engine.c HTS_label.c HTS_model.c HTS_sstream.c hts_engine.c HTS_gstream.c HTS_misc.c HTS_pstream.c HTS_vocoder.c svradesh.c pre.js worker3.js 3pre.js
 	cat pre.js worker3.js > suvakpost3.js && \

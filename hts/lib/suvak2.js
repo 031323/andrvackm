@@ -1,4 +1,4 @@
-const suvaggaurvm=4787873;
+var suvaggaurvm=4787873;
 
 var context = new AudioContext({sampleRate:48000,latencyHint:"playback"});
 
@@ -20,7 +20,10 @@ suvagarmbh=function(prtikrm,reload,progress) {
 	//xhr.open('GET', 'http://0.0.0.0:8000/suvakww.js');
 	//xhr.open('GET', 'http://localhost:8080/suvakww.js');
 	xhr.open('GET', website+'suvakworker.js');
-	xhr.onprogress=(e)=>{if(typeof(progress)!='undefined')progress(e.loaded);console.log(e.loaded);};
+	xhr.onprogress=(e)=>{
+		if(e.total)suvaggaurvm=e.total;
+		if(typeof(progress)!='undefined')progress(e.loaded);console.log(e.loaded);
+	};
 	xhr.onload = function() {
     if (xhr.status === 200) {
         let workerSrcBlob, workerBlobURL;
