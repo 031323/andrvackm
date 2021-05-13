@@ -1,4 +1,4 @@
-var suvaggaurvm=4787873;
+var suvaggaurvm=4788078;
 
 var context = new AudioContext({sampleRate:48000,latencyHint:"playback"});
 
@@ -70,5 +70,6 @@ suvacnarmbh=function(vakym,armbkrm,prtikrm)
     	suvak_reload();
     }
   };
-  node.port.postMessage(vakym);
+  node.port.postMessage([vakym,Math.log(suvak_svr0),Math.log(suvak_svr1)]);
 }
+var suvak_svr0=100,suvak_svr1=135;
