@@ -10,6 +10,11 @@ size_t vrnanth[VRNSIMA];
 double anukalh;
 size_t vrnsnkya;
 char svrah[VRNSIMA],svrahL[VRNSIMA],svrahR[VRNSIMA],dvitv[VRNSIMA];
+double us=4.9,as=4.6;
+void svrprivrtnm(double as_,double us_)
+{
+	us=us_,as=as_;
+}
 void svrstapnm(size_t vrnsnkya0,char *svrah0,char *svrahL0,char *svrahR0,char *dvitv0)
 {
 	purvanvh=0;
@@ -45,7 +50,6 @@ double svradesh0(size_t f){
 			vrnanvh=vrnanth[vrnkrmh]-vrnanth[vrnkrmh-1];
 			//console.log(vrnanvh)
 		}
-		double us=4.9,as=4.6;
 		//return us
 		if(svrah[vrnkrmh]=='A')return as;
 		else if(svrah[vrnkrmh]=='U')return us;
