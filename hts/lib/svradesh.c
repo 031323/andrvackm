@@ -1,5 +1,6 @@
 #define VRNSIMA 65536
 #include<string.h>
+//#include<emscripten.h>
 double hts_anukalh();
 size_t hts_vrnanvh(size_t krmh);
 size_t purvanvh=0;
@@ -9,13 +10,13 @@ int gnnm=0;
 size_t vrnanth[VRNSIMA];
 double anukalh;
 size_t vrnsnkya;
-char svrah[VRNSIMA],svrahL[VRNSIMA],svrahR[VRNSIMA],dvitv[VRNSIMA];
-double us=4.9,as=4.6;
-void svrprivrtnm(double as_,double us_)
+char svrah[VRNSIMA],svrahL[VRNSIMA],svrahR[VRNSIMA],dvitv[VRNSIMA],gosyh[VRNSIMA];
+double us=4.9,as=4.6,sa=4.6,su=4.9,snn=4.6;
+void svrprivrtnm(double as_,double us_,double sa_,double su_,double snn_)
 {
-	us=us_,as=as_;
+	us=us_,as=as_;sa=sa_;su=su_;snn=snn_;
 }
-void svrstapnm(size_t vrnsnkya0,char *svrah0,char *svrahL0,char *svrahR0,char *dvitv0)
+void svrstapnm(size_t vrnsnkya0,char *svrah0,char *svrahL0,char *svrahR0,char *dvitv0,char *gosyh0)
 {
 	purvanvh=0;
 	vrnanvh=0;
@@ -27,8 +28,10 @@ void svrstapnm(size_t vrnsnkya0,char *svrah0,char *svrahL0,char *svrahR0,char *d
 	memcpy(svrahL,svrahL0,vrnsnkya);
 	memcpy(svrahR,svrahR0,vrnsnkya);
 	memcpy(dvitv,dvitv0,vrnsnkya);
+	memcpy(gosyh,gosyh0,vrnsnkya);
 }	
 double svradesh0(size_t f){
+		//EM_ASM({console.log('g:'+$0)},gosyh);
 		if(!gnnm)
 		{
 			size_t sum=0;
@@ -51,14 +54,14 @@ double svradesh0(size_t f){
 			//console.log(vrnanvh)
 		}
 		//return us
-		if(svrah[vrnkrmh]=='A')return as;
+		if(svrah[vrnkrmh]=='A')return svrahR[vrnkrmh]!='A'?snn:as;
 		else if(svrah[vrnkrmh]=='U')return us;
 		else if(svrah[vrnkrmh]=='S')
 		{
 			double udattkalh=(double)vrnanvh*anukalh;
 			if(udattkalh>0.1)udattkalh=0.1;
-			if(anukalh*(double)(f-purvanvh)<udattkalh)return us+(as-us)*(double)(f-purvanvh)*anukalh/udattkalh;
-			else return as;
+			if(anukalh*(double)(f-purvanvh)<udattkalh)return su+(sa-su)*(double)(f-purvanvh)*anukalh/udattkalh;
+			else return sa;
 		}
 		else if(svrah[vrnkrmh]=='V')
 		{
@@ -72,12 +75,13 @@ double svradesh0(size_t f){
 			{
 				if((svrah[vrnkrmh-1]=='A'||svrah[vrnkrmh-1]=='S')&&!dlh)
 				{
-					p1=as;
+					p1=svrahR[vrnkrmh-1]!='A'?snn:as;
 					if(vrnkrmh<vrnsnkya-1)
 					{
 						if(svrah[vrnkrmh+1]=='V'||dvitv[vrnkrmh])p2=as;
 					}
 				}
+				if(svrah[vrnkrmh-1]=='S'&&!dlh)p1=sa;
 				if(svrah[vrnkrmh-1]=='V'||dlh)
 				{
 					if(vrnkrmh>1&&!dlh)
@@ -93,7 +97,9 @@ double svradesh0(size_t f){
 			if(vrnkrmh<vrnsnkya-1)
 			{
 				if(svrah[vrnkrmh+1]=='A'&&(!dvitv[vrnkrmh]||dlh))
-					p2=as;
+					p2=svrahR[vrnkrmh+1]!='A'?snn:as;
+				if(svrah[vrnkrmh+1]=='S'&&(!dvitv[vrnkrmh]||dlh))
+					p2=su;
 			}
 			/*
 			double p2=svrahR[vrnkrmh]=='A'?as:us;

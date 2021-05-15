@@ -169,7 +169,7 @@ function varnzanirnzayah(word)
         return [vrnah,dvitv,svrah,svrahL,svrahR]
 }
 function str(x){return x.toString()}
-var vakarr
+var vakarr;
 function labeller(d){
 	let arr=varnzanirnzayah(d)
 	vakarr=arr
@@ -218,7 +218,15 @@ function labeller(d){
 	}
 	//console.log(vrnah)
 	//console.log(svrah)
-	return [len(vrnah),lab,svrah,svrahL,svrahR,dvitv]
+	let gosyh=[];
+	for(let i=0;i<vrnah.length;i++)
+	{
+		let gosyh0=false;
+		[...'कखगघचछजझटठडढतथदधपफबभशषस'].forEach((v)=>{if(transliterate[v]==vrnah[i])gosyh0=true;});
+		if(gosyh0)gosyh.push('X');
+		else gosyh.push('O');
+	}
+	return [len(vrnah),lab,svrah,svrahL,svrahR,dvitv,gosyh];
 }
 var convertUint8ArrayToBinaryString =function(u8Array) {
 	var i, len = u8Array.length, b_str = "";
@@ -255,11 +263,12 @@ var vakstapnm=function(vakym)
 	var f0_=0
 	*/
 	FS.writeFile('assets/0.lab',arr[1])
-	Module.ccall('svrstapnm',null,['number','string','string','string','string'],[arr[0],
+	Module.ccall('svrstapnm',null,['number','string','string','string','string','string'],[arr[0],
 		arr[2].toString().replace(/,/g,''),
 		arr[3].toString().replace(/,/g,''),
 		arr[4].toString().replace(/,/g,''),
-		arr[5].toString().replace(/,/g,'')
+		arr[5].toString().replace(/,/g,''),
+		arr[6].toString().replace(/,/g,'')
 		])
 	fp=Module.ccall('svradesadesh','number',[],[])
 	/*addFunction(function (f){

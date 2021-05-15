@@ -238,6 +238,9 @@ HTS_Vocoder * v2; size_t m; double lf0; double *spectrum; double *rawdata;
    int rawidx = 0;
    double p;
 
+extern size_t vrnkrmh;
+extern char gosyh[];
+
 float pro_sbdh()
 {
 	//EM_ASM({console.log($0)},j);
@@ -263,8 +266,10 @@ float pro_sbdh()
       &gss->gstream[0].par[i][0], nlpf, lpf, alpha, beta, volume, &gss->gspeech[j], audio);
     */
     {
-    	v2=&v; m=gss->gstream[0].vector_length - 1; 
-      lf0=gss->gstream[1].par[i][0]==LZERO?LZERO:svradesh0(i);
+    	v2=&v; m=gss->gstream[0].vector_length - 1;
+			//EM_ASM({console.log($0)},gosyh[vrnkrmh]);
+			double antsvrh=svradesh0(i);
+      lf0=0&&gosyh[vrnkrmh]=='X'?gss->gstream[1].par[i][0]:gss->gstream[1].par[i][0]==LZERO?LZERO:antsvrh;
       spectrum=&gss->gstream[0].par[i][0];
       rawdata=&gss->gspeech[j];
       rawidx=0;
