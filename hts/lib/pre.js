@@ -88,7 +88,7 @@ function varnzanirnzayah(word)
         for (let i=0;i<len(svrah);i++){
         	if (svrah[i]==0)u=false
         	if (svrah[i]==2)u=true
-        	if (svrah[i]==1 && u)svrah[i]=0
+        	if (svrah[i]==1 && u && !udattadnudattsysvrith)svrah[i]=0
         }
         let vrnah=['sil']
         let dvitv=[false]
@@ -250,6 +250,7 @@ if(typeof(window)=='undefined')return;
 	}
 };
 var fp;
+var udattadnudattsysvrith=false;
 var vakstapnm=function(vakym)
 {
 	let arr=labeller(vakym)
