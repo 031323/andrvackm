@@ -1,4 +1,4 @@
-var suvaggaurvm=4788655;
+var suvaggaurvm=4788761;
 
 var context = new AudioContext({sampleRate:48000,latencyHint:"playback"});
 
@@ -76,9 +76,12 @@ suvacnarmbh=function(vakym,armbkrm,prtikrm)
   if(suvak_svritanudatth>0)sa=suvak_svritanudatth;
   if(suvak_svritodatth>0)su=suvak_svritodatth;
   if(suvak_udattpurvanudatth>0)snn=suvak_udattpurvanudatth;
-  node.port.postMessage([vakym,Math.log(suvak_svr0),Math.log(suvak_svr1),Math.log(sa),Math.log(su),Math.log(snn)]);
+  node.port.postMessage([vakym,
+  	Math.log(suvak_svr0),Math.log(suvak_svr1),Math.log(sa),Math.log(su),Math.log(snn),
+  	udattadnudattsysvrith]);
 }
 var suvak_svr0=100,suvak_svr1=135;
 var suvak_svritanudatth=-1;
 var suvak_svritodatth=-1;
 var suvak_udattpurvanudatth=-1;
+var udattadnudattsysvrith=false;
