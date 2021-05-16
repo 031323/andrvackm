@@ -164,6 +164,16 @@ HTS_GStreamSet * gss; HTS_PStreamSet * pss; size_t stage; HTS_Boolean use_log_ga
    HTS_Vocoder v;
    size_t nlpf = 0;
    double *lpf = NULL;
+
+void pro_vegh(float vegh)
+{
+	if(vegh!=1.0)
+	{
+		EM_ASM({console.log('vegh:'+$0)},vegh);
+		HTS_Engine_set_phoneme_alignment_flag(&engine, FALSE);
+	}
+	HTS_Engine_set_speed(&engine,vegh);
+}
    
 size_t pro_vacnarmbh(char* labfn,double(* svradesh0)(size_t))
 {

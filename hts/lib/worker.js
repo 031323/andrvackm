@@ -11,8 +11,9 @@ class SuvakProcessor extends AudioWorkletProcessor {
       console.log(event.data);
       udattadnudattsysvrith=event.data[6];
       let t0=Date.now();
-      vakstapnm(event.data[0],event.data[6]);
+      vakstapnm(event.data[0]);
       Module.ccall('svrprivrtnm',null,['double','double','double','double','double'],[event.data[1],event.data[2],event.data[3],event.data[4],event.data[5]]);
+      Module.ccall('pro_vegh',null,['float'],[event.data[7]]);
       let t1=Date.now();
       console.log('vakstapnm: '+(t1-t0).toString());
       t0=t1;
