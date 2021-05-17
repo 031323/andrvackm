@@ -47,7 +47,7 @@ xhr.send();
 var suvacnm=false;
 suvacnarmbh=function(vakym,armbkrm,prtikrm)
 {
-	if(suvacnm)return;
+	if(suvacnm||!suvagarbdih)return;
 	suvacnm=true;
 	context.resume();
 	let node = new AudioWorkletNode(context, 'suvak-processor');
