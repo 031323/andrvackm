@@ -258,6 +258,12 @@ var vakstapnm=function(vakym)
 {
 	let arr=labeller(vakym)
 	arr[1]='0 500000 '+arr[1]
+	let aa=0;
+	for(aa=0;aa<arr[0];aa++)
+	{
+		if(arr[4][aa]!='A')break;
+	}
+	console.log('aa: '+aa);
 	/*var purvanvh=0
 	var vrnanvh=0;
 	var vrnkrmh=0
@@ -267,11 +273,12 @@ var vakstapnm=function(vakym)
 	var f0_=0
 	*/
 	FS.writeFile('assets/0.lab',arr[1])
-	Module.ccall('svrstapnm',null,['number','string','string','string','string','string'],[arr[0],
+	Module.ccall('svrstapnm',null,['number','string','string','string','string','string','number'],[arr[0],
 		arr[2].toString().replace(/,/g,''),
 		arr[3].toString().replace(/,/g,''),
 		arr[4].toString().replace(/,/g,''),
 		arr[5].toString().replace(/,/g,''),
+		aa
 		//arr[6].toString().replace(/,/g,'')
 		])
 	fp=Module.ccall('svradesadesh','number',[],[])

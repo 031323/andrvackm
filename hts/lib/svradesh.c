@@ -17,7 +17,7 @@ void svrprivrtnm(double as_,double us_,double sa_,double su_,double snn_,double 
 	us=us_,as=as_;sa=sa_;su=su_;snn=snn_;adi=adi_;
 }
 void svrstapnm(size_t vrnsnkya0,char *svrah0,char *svrahL0,char *svrahR0,char *dvitv0
-//,size_t aa0
+,size_t aa0
 //,char *gosyh0
 )
 {
@@ -27,7 +27,7 @@ void svrstapnm(size_t vrnsnkya0,char *svrah0,char *svrahL0,char *svrahR0,char *d
 	gnnm=0;
 	anukalh=hts_anukalh();
 	vrnsnkya=vrnsnkya0;
-	//aa=aa0;
+	aa=aa0;
 	memcpy(svrah,svrah0,vrnsnkya);
 	memcpy(svrahL,svrahL0,vrnsnkya);
 	memcpy(svrahR,svrahR0,vrnsnkya);
@@ -59,7 +59,7 @@ double svradesh0(size_t f){
 		}
 		//EM_ASM({console.log($4+' '+$3+' ) '+$0+': '+$1+' -> '+$2)},f,purvanvh,purvanvh+vrnanvh,vrnkrmh,dvitv[vrnkrmh]);
 		//return us
-		//double as=vrnkrmh<aa?adi:as;
+		double as=vrnkrmh<aa?adi:as;
 		if(svrah[vrnkrmh]=='A')return svrahR[vrnkrmh]!='A'?snn:as;
 		else if(svrah[vrnkrmh]=='U')return us;
 		else if(svrah[vrnkrmh]=='S')
