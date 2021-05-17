@@ -1,4 +1,4 @@
-var suvaggaurvm=4789084;
+var suvaggaurvm=4788852;
 
 var context = new AudioContext({sampleRate:48000,latencyHint:"playback"});
 
@@ -73,16 +73,19 @@ suvacnarmbh=function(vakym,armbkrm,prtikrm)
   let sa=suvak_svr0;
   let su=suvak_svr1;
   let snn=suvak_svr0;
+  let adi=suvak_svr0;
   if(suvak_svritanudatth>0)sa=suvak_svritanudatth;
+  if(suvak_adisvrh>0)adi=suvak_adisvrh;
   if(suvak_svritodatth>0)su=suvak_svritodatth;
   if(suvak_udattpurvanudatth>0)snn=suvak_udattpurvanudatth;
   node.port.postMessage([vakym,
-  	Math.log(suvak_svr0),Math.log(suvak_svr1),Math.log(sa),Math.log(su),Math.log(snn),
+  	Math.log(suvak_svr0),Math.log(suvak_svr1),Math.log(sa),Math.log(su),Math.log(snn),Math.log(adi),
   	udattadnudattsysvrith,suvak_vegh]);
 }
 var suvak_svr0=100,suvak_svr1=135;
 var suvak_svritanudatth=-1;
 var suvak_svritodatth=-1;
 var suvak_udattpurvanudatth=-1;
+var suvak_adisvrh=-1;
 var udattadnudattsysvrith=false;
 var suvak_vegh=1.0;
