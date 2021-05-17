@@ -218,7 +218,7 @@ function labeller(d){
 	}
 	//console.log(vrnah)
 	//console.log(svrah)
-	let gosyh=[];
+	/*let gosyh=[];
 	for(let i=0;i<vrnah.length;i++)
 	{
 		let gosyh0=false;
@@ -226,7 +226,10 @@ function labeller(d){
 		if(gosyh0)gosyh.push('X');
 		else gosyh.push('O');
 	}
-	return [len(vrnah),lab,svrah,svrahL,svrahR,dvitv,gosyh];
+	*/
+	return [len(vrnah),lab,svrah,svrahL,svrahR,dvitv,
+	//gosyh
+	];
 }
 var convertUint8ArrayToBinaryString =function(u8Array) {
 	var i, len = u8Array.length, b_str = "";
@@ -269,7 +272,7 @@ var vakstapnm=function(vakym)
 		arr[3].toString().replace(/,/g,''),
 		arr[4].toString().replace(/,/g,''),
 		arr[5].toString().replace(/,/g,''),
-		arr[6].toString().replace(/,/g,'')
+		//arr[6].toString().replace(/,/g,'')
 		])
 	fp=Module.ccall('svradesadesh','number',[],[])
 	/*addFunction(function (f){
