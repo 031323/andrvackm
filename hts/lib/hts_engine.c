@@ -279,7 +279,7 @@ float pro_sbdh()
     	v2=&v; m=gss->gstream[0].vector_length - 1;
 			//EM_ASM({console.log($0)},gosyh[vrnkrmh]);
 			double antsvrh=svradesh0(i);
-			EM_ASM({console.log($0)},antsvrh);
+			//EM_ASM({console.log($0)},antsvrh);
       lf0=0&&gosyh[vrnkrmh]=='X'?gss->gstream[1].par[i][0]:gss->gstream[1].par[i][0]==LZERO?LZERO:antsvrh;
       spectrum=&gss->gstream[0].par[i][0];
       rawdata=&gss->gspeech[j];
