@@ -1,20 +1,4 @@
 # सु॒वाक्
-    <html>
-    <body>
-    <button id="b1"></button>
-    <script src="https://031323.github.io/suvak/suvak2.js"></script>
-    <script>
-    b1.disabled=true;
-    suvagarmbh(
-    	()=>{b1.disabled=false;},
-    	()=>{console.log('error');}
-    )
-    b1.onclick=()=>{
-    	
-    }
-    </script>
-    </body>
-    </body>
 ## अ॒न्यत्किञ्चि॑त्
     git clone https://github.com/031323/suvak.git
     git clone https://github.com/031323/MBROLA.git
