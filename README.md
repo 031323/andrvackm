@@ -7,7 +7,7 @@
     </head>
     <body>
     <button id="b1" disabled>?</button>
-    <script src="https://031323.github.io/suvak/suvak2.js"></script>
+    <script src="https://031323.github.io/suvak/suvak.js"></script>
     <script>
     website='https://031323.github.io/suvak/';
     suvagarmbh(
