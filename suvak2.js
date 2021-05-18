@@ -22,7 +22,7 @@ suvagarmbh=function(prtikrm,reload,progress) {
 	xhr.open('GET', website+'suvakworker.js');
 	xhr.onprogress=(e)=>{
 		if(e.total)suvaggaurvm=e.total;
-		if(typeof(progress)!='undefined')progress(e.loaded);console.log(e.loaded);
+		if(typeof(progress)!='undefined')progress(e.loaded/suvaggaurvm);console.log(e.loaded/suvaggaurvm);
 	};
 	xhr.onload = function() {
     if (xhr.status === 200) {
