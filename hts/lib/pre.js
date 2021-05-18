@@ -273,12 +273,12 @@ var vakstapnm=function(vakym)
 	var f0_=0
 	*/
 	FS.writeFile('assets/0.lab',arr[1])
-	Module.ccall('svrstapnm',null,['number','string','string','string','string','string','number'],[arr[0],
+	Module.ccall('svrstapnm',null,['number','number','string','string','string','string','string'],[arr[0],
+		aa,
 		arr[2].toString().replace(/,/g,''),
 		arr[3].toString().replace(/,/g,''),
 		arr[4].toString().replace(/,/g,''),
 		arr[5].toString().replace(/,/g,''),
-		aa
 		//arr[6].toString().replace(/,/g,'')
 		])
 	fp=Module.ccall('svradesadesh','number',[],[])

@@ -16,8 +16,8 @@ void svrprivrtnm(double as_,double us_,double sa_,double su_,double snn_,double 
 {
 	us=us_,as=as_;sa=sa_;su=su_;snn=snn_;adi=adi_;
 }
-void svrstapnm(size_t vrnsnkya0,char *svrah0,char *svrahL0,char *svrahR0,char *dvitv0
-,size_t aa0
+void svrstapnm(size_t vrnsnkya0,size_t aa0,char *svrah0,char *svrahL0,char *svrahR0,char *dvitv0
+
 //,char *gosyh0
 )
 {
@@ -28,6 +28,7 @@ void svrstapnm(size_t vrnsnkya0,char *svrah0,char *svrahL0,char *svrahR0,char *d
 	anukalh=hts_anukalh();
 	vrnsnkya=vrnsnkya0;
 	aa=aa0;
+	EM_ASM({console.log('aa_0:'+$0)},aa0);
 	memcpy(svrah,svrah0,vrnsnkya);
 	memcpy(svrahL,svrahL0,vrnsnkya);
 	memcpy(svrahR,svrahR0,vrnsnkya);
@@ -51,6 +52,7 @@ double svradesh0(size_t f){
 		if(f>vrnanvh+purvanvh)
 		{
 			while(f>vrnanth[vrnkrmh])vrnkrmh+=1;
+			//EM_ASM({console.log($0+' '+$1)},vrnkrmh,aa);
 			//console.log(vrnkrmh)
 			//console.log(arr[2][vrnkrmh])
 			purvanvh=vrnanth[vrnkrmh-1];
@@ -59,8 +61,13 @@ double svradesh0(size_t f){
 		}
 		//EM_ASM({console.log($4+' '+$3+' ) '+$0+': '+$1+' -> '+$2)},f,purvanvh,purvanvh+vrnanvh,vrnkrmh,dvitv[vrnkrmh]);
 		//return us
-		double as=vrnkrmh<aa?adi:as;
-		if(svrah[vrnkrmh]=='A')return svrahR[vrnkrmh]!='A'?snn:as;
+		double as0=as;
+		//EM_ASM({console.log($0+' '+$1)},vrnkrmh,aa);
+		if(vrnkrmh<aa){
+			as0=adi;
+		}
+		//else EM_ASM({console.log('more')});
+		if(svrah[vrnkrmh]=='A')return svrahR[vrnkrmh]!='A'?snn:as0;
 		else if(svrah[vrnkrmh]=='U')return us;
 		else if(svrah[vrnkrmh]=='S')
 		{
@@ -75,16 +82,16 @@ double svradesh0(size_t f){
 			double bedh=0.9;
 			if(dvitv[vrnkrmh]=='X')dlh=(double)(f-purvanvh)>(double)vrnanvh*bedh;
 			double p1,p2;
-			p1=svrahL[vrnkrmh]=='U'||svrahR[vrnkrmh]!='A'?us:as;
+			p1=svrahL[vrnkrmh]=='U'||svrahR[vrnkrmh]!='A'?us:as0;
 			p2=p1;
 			if(vrnkrmh>0)
 			{
 				if((svrah[vrnkrmh-1]=='A'||svrah[vrnkrmh-1]=='S')&&!dlh)
 				{
-					p1=svrahR[vrnkrmh-1]!='A'?snn:as;
+					p1=svrahR[vrnkrmh-1]!='A'?snn:as0;
 					if(vrnkrmh<vrnsnkya-1)
 					{
-						if(svrah[vrnkrmh+1]=='V'||dvitv[vrnkrmh]=='X')p2=as;
+						if(svrah[vrnkrmh+1]=='V'||dvitv[vrnkrmh]=='X')p2=as0;
 					}
 				}
 				if(svrah[vrnkrmh-1]=='S'&&!dlh)p1=sa;
@@ -92,18 +99,18 @@ double svradesh0(size_t f){
 				{
 					if(vrnkrmh>1&&!dlh)
 					{
-						if(svrah[vrnkrmh-2]=='A'||svrah[vrnkrmh-2]=='S')p1=as;
+						if(svrah[vrnkrmh-2]=='A'||svrah[vrnkrmh-2]=='S')p1=as0;
 					}
 					if(dlh)
 					{
-						if(svrah[vrnkrmh-1]=='A'||svrah[vrnkrmh-1]=='S')p1=as;
+						if(svrah[vrnkrmh-1]=='A'||svrah[vrnkrmh-1]=='S')p1=as0;
 					}
 				}
 			}
 			if(vrnkrmh<vrnsnkya-1)
 			{
 				if(svrah[vrnkrmh+1]=='A'&&(dvitv[vrnkrmh]!='X'||dlh))
-					p2=svrahR[vrnkrmh+1]!='A'?snn:as;
+					p2=svrahR[vrnkrmh+1]!='A'?snn:as0;
 				if(svrah[vrnkrmh+1]=='S'&&(dvitv[vrnkrmh]!='X'||dlh))
 					p2=su;
 			}
