@@ -259,10 +259,13 @@ var vakstapnm=function(vakym)
 	let arr=labeller(vakym)
 	arr[1]='0 500000 '+arr[1]
 	let aa=0;
+	let adisrutih=false;
 	for(aa=0;aa<arr[0];aa++)
 	{
 		if(arr[4][aa]!='A')break;
+		if(arr[2][aa]=='A'&&arr[4][aa]=='A')adisrutih=true;
 	}
+	if(!adisrutih)aa=0;
 	console.log('aa: '+aa);
 	/*var purvanvh=0
 	var vrnanvh=0;
