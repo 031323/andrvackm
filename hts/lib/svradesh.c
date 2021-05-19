@@ -16,10 +16,9 @@ void svrprivrtnm(double as_,double us_,double sa_,double su_,double snn_,double 
 {
 	us=us_,as=as_;sa=sa_;su=su_;snn=snn_;adi=adi_;
 }
-void svrstapnm(size_t vrnsnkya0,size_t aa0,char *svrah0,char *svrahL0,char *svrahR0,char *dvitv0
-
+void svrstapnm(size_t vrnsnkya0,size_t aa0,char *svrah0,char *svrahL0,char *svrahR0,char *dvitv0)
 //,char *gosyh0
-)
+
 {
 	purvanvh=0;
 	vrnanvh=0;
