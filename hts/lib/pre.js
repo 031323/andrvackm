@@ -104,7 +104,8 @@ function varnzanirnzayah(word)
             if(varnzaah[i]=='ॠ'){
             	vrnah.push('R')
             	dvitv.push(false)
-            	svrah2.push(svrah[i])
+            	if(svrah[i]==1)svrah2.push(0)
+            	else svrah2.push(svrah[i])
             }
             
             //if varnzaah[i] in 'आ इ ई उ ऊ ऋ ॠ ऌ ॡ ए ऐ ओ औ'.split(' ') and i+1<len(varnzaah):

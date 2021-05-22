@@ -18,5 +18,11 @@ suvakww.js:HTS_audio.c HTS_engine.c HTS_label.c HTS_model.c HTS_sstream.c hts_en
 	sed -i -e 's/xhr.onerror=function(event){/xhr.onerror=function(event){abort("network2");/g' suvakww.js && \
 	sed -i -e 's/xhr.status===304))throw new Error(\"Couldn'\''t load \"+url+\". Status: \"+xhr.status);/xhr.status===304)){abort("network3");throw new Error("couldnot load");}/g' suvakww.js
 	
+suvak.js:suvak2.js suvakmodule.js suvakworker.js
+	#echo "const suvakworker=\`">suvak.js && \
+	#cat suvakworker.js>>suvak.js && \
+	#echo "\`;">>suvak.js && \
+	cat suvak2.js suvakmodule.js > suvak.js
+	
 pages:
 	sh pages.sh
