@@ -1,4 +1,4 @@
-var suvaggaurvm=4789213;
+var suvaggaurvm=4789258;
 
 var context = new AudioContext({sampleRate:48000,latencyHint:"playback"});
 
@@ -49,13 +49,14 @@ var suvacnm=false;
 var suvakkrmh=0;
 const suvacnarmbh=function(vakym,armbkrm,prtikrm)
 {
-	if(suvacnm||!suvakw)return;
+	if(!suvakw)return;
+	//if(suvacnm)return;
 	suvakkrmh++;
 	let ettkrmh=suvakkrmh;
 	context.resume().then(()=>{
 	console.log(context.state);
 	if(ettkrmh!=suvakkrmh)return;
-	if(suvacnm)return;
+	//if(suvacnm)return;
 	suvacnm=true;
 	let node = new AudioWorkletNode(context, 'suvak-processor');
 	node.port.onmessage = (event) => {

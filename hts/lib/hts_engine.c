@@ -174,9 +174,10 @@ void pro_vegh(float vegh)
 	}
 	HTS_Engine_set_speed(&engine,vegh);
 }
-   
+
 size_t pro_vacnarmbh(char* labfn,double(* svradesh0)(size_t))
 {
+	HTS_Vocoder_clear(&v);
 	HTS_Engine_refresh(&engine);
 	HTS_Engine_generate_state_sequence_from_fn(&engine,labfn);
 	HTS_Engine_generate_parameter_sequence(&engine);

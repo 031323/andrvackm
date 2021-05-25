@@ -28,6 +28,7 @@ class SuvakProcessor extends AudioWorkletProcessor {
 
   process(inputs, outputs, parameters) {
   	if(!arbdh)return true;
+  	if(suvakprocessor!=this)return false;
   	const output=outputs[0][0];
   	for (let i = 0; i < output.length; ++i)
   	{
@@ -37,7 +38,7 @@ class SuvakProcessor extends AudioWorkletProcessor {
       	arbdh=false;
       	for(;i<output.length;i++)
 	 		     output[i]=0.0;
- 		    this.port.postMessage('smaptih')
+ 		    this.port.postMessage('smaptih');
  		    return false;
       }
       else output[i]=agtih
