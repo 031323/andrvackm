@@ -1,4 +1,4 @@
-var suvaggaurvm=4789178;
+var suvaggaurvm=4789258;
 
 var context = new AudioContext({sampleRate:48000,latencyHint:"playback"});
 
@@ -11,9 +11,10 @@ else
 	website='https://031323.github.io/suvak/';
 var suvak_reload;
 var suvagarbdih=false;
+var suvakw=false;
 
-suvagarmbh=function(prtikrm,reload,progress) {
-	if(suvagarbdih)return;
+const suvagarmbh=function(prtikrm,reload,progress) {
+	if(suvagarbdih){prtikrm();return;}
 	else suvagarbdih=true;
 	let xhr = new XMLHttpRequest();
 	console.log('xhr');
@@ -30,7 +31,7 @@ suvagarmbh=function(prtikrm,reload,progress) {
         
             workerSrcBlob = new Blob([xhr.responseText], { type: 'text/javascript' });
             workerBlobURL = window.URL.createObjectURL(workerSrcBlob);
-						context.audioWorklet.addModule(workerBlobURL).then(() => { prtikrm() });
+						context.audioWorklet.addModule(workerBlobURL).then(() => {suvakw=true; prtikrm();});
 						suvak_reload=reload;
     }
 		else reload();
@@ -45,11 +46,18 @@ xhr.send();
 }*/
 
 var suvacnm=false;
-suvacnarmbh=function(vakym,armbkrm,prtikrm)
+var suvakkrmh=0;
+const suvacnarmbh=function(vakym,armbkrm,prtikrm)
 {
-	if(suvacnm||!suvagarbdih)return;
+	if(!suvakw)return;
+	//if(suvacnm)return;
+	suvakkrmh++;
+	let ettkrmh=suvakkrmh;
+	context.resume().then(()=>{
+	console.log(context.state);
+	if(ettkrmh!=suvakkrmh)return;
+	//if(suvacnm)return;
 	suvacnm=true;
-	context.resume();
 	let node = new AudioWorkletNode(context, 'suvak-processor');
 	node.port.onmessage = (event) => {
 		console.log('message')
@@ -81,11 +89,13 @@ suvacnarmbh=function(vakym,armbkrm,prtikrm)
   node.port.postMessage([vakym,
   	Math.log(suvak_svr0),Math.log(suvak_svr1),Math.log(sa),Math.log(su),Math.log(snn),Math.log(adi),
   	udattadnudattsysvrith,suvak_vegh]);
+  
+  });
 }
-var suvak_svr0=100,suvak_svr1=135;
+var suvak_svr0=106.67,suvak_svr1=120;
 var suvak_svritanudatth=-1;
-var suvak_svritodatth=-1;
-var suvak_udattpurvanudatth=-1;
-var suvak_adisvrh=-1;
-var udattadnudattsysvrith=false;
+var suvak_svritodatth=133.33;
+var suvak_udattpurvanudatth=100;
+var suvak_adisvrh=100;
+var udattadnudattsysvrith=true;
 var suvak_vegh=1.0;
