@@ -82,8 +82,8 @@ function varnzanirnzayah(word)
             		}
         //console.log(varnzaah) 
         }
-        console.log(varnzaah)
-        console.log(svrah);
+        //console.log(varnzaah)
+        //console.log(svrah);
         let u=false
         for (let i=0;i<len(svrah);i++){
         	if (svrah[i]==0)u=false
@@ -118,7 +118,7 @@ function varnzanirnzayah(word)
             //console.log('thisis')
             if (['k','g','c','j','T','D','t','d','p','b'].includes(transliterate[varnzaah[i]][0] )&& i>0){
             	if (transliterate[varnzaah[i-1]][0]==transliterate[varnzaah[i]][0]){
-				        console.log(svrah2)
+				        //console.log(svrah2)
             		vrnah.splice(vrnah.length-2,1)
             		dvitv.splice(dvitv.length-2,1)
             		svrah2.splice(svrah2.length-2,1)
@@ -267,7 +267,6 @@ var vakstapnm=function(vakym)
 		if(arr[2][aa]=='A'&&arr[4][aa]=='A')adisrutih=true;
 	}
 	if(!adisrutih)aa=0;
-	console.log('aa: '+aa);
 	/*var purvanvh=0
 	var vrnanvh=0;
 	var vrnkrmh=0

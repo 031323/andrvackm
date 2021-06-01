@@ -27,7 +27,7 @@ void svrstapnm(size_t vrnsnkya0,size_t aa0,char *svrah0,char *svrahL0,char *svra
 	anukalh=hts_anukalh();
 	vrnsnkya=vrnsnkya0;
 	aa=aa0;
-	EM_ASM({console.log('aa_0:'+$0)},aa0);
+	//EM_ASM({console.log('aa_0:'+$0)},aa0);
 	memcpy(svrah,svrah0,vrnsnkya);
 	memcpy(svrahL,svrahL0,vrnsnkya);
 	memcpy(svrahR,svrahR0,vrnsnkya);
